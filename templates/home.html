@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div class="home">
+        <div>
+            {% include 'nav.html' %}
+        </div>
+
+        <div class="fy">
+            <input type="text" class="input-search" placeholder="Pesquisar">
+
+            <div class="create-poem">
+                <img src="{{ avatars.default(size='s') }}">
+                <input type="text" placeholder="Escreva algo aqui">     
+            </div>
+
+            {% include 'post.html' %}
+        </div>
+
+        <div class="rank">
+            {% include 'rank.html' %}
+        </div>
+    </div>
+{% endblock %}
