@@ -1,0 +1,17 @@
+{% include 'base.html' %}
+
+{% block body %}
+    <h1>signup</h1>
+    <form action="">
+        {{ formsignin.csrf_token }}
+        {{ formsignin.email.label }}
+        {{ formsignin.email }}
+
+        {{ formsignin.password.label }}
+        {{ formsignin.password }}
+
+        {{ formsignin.RememberPassword.label }}
+        {{ formsignin.RememberPassword }}
+        {{ formsignin.submit }}
+    </form>
+{% endblock %}

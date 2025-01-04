@@ -1,9 +1,10 @@
 :root {
   --nav-bg: #D9D9D9;
-  --btn-bg: #6BA229;
+  --btn-color: #6BA229;
   --bg: #636161;
   --post: rgba(41, 40, 40, 0.8);
   --login-color: #8B8B8B;
+  --bg-title-login: #262626;
 }
 
 .home {
@@ -245,5 +246,94 @@
         #text-notification {
             text-align: center;
         }
+    }
+}
+
+.signup {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: #fff;
+    border-radius: 20px;
+    width: 476px;
+    height: auto;
+    margin: auto;
+    border-radius: 16px;
+    text-align: center;
+
+
+    .title {
+        background-color: var(--bg-title-login);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 105px;
+        color: #fff;
+        border-radius: 16px 16px 0 0;
+        gap: 13px;
+    }
+
+    .div-input-login {
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        text-align: left;
+        gap: 5px;
+
+        #submit {
+            margin-top: 20px;
+            background-color: var(--btn-color);
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+    }
+
+    .social-accounts {
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        justify-content: center;
+        gap: 10px;
+
+
+        button {
+            background-color: transparent;
+            padding: 5px 0;
+            border: 2px solid var(--nav-bg);
+        }
+    }
+
+    .div-email-name {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    input {
+        width: 100%;
+        padding: 8px;
+        border: 2px solid var(--nav-bg);
+        border-radius: 5px;
+    }
+
+    .description #description-title {
+        font-size: 24px;
+        font-weight: bold;
+        line-height: 24px;
+        letter-spacing: 0em;
+        text-align: center;
+        color: black;
+    }
+
+    .description #description-text {
+        color: var(--login-color);
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: 0em;
+        text-align: center;
     }
 }

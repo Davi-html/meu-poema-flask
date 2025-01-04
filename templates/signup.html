@@ -1,0 +1,56 @@
+{% include 'base.html' %}
+
+{% block body %}
+    <form action="" class="signup">
+        <div class="title">
+            <img src="{{ url_for('static', filename='feather-solid.svg')}}" alt="placeholder">
+            <h1>Meu poema</h1>
+        </div>
+        <div class="description">
+            <p id="description-title">Great to see you!</p>
+            <p id="description-text">Let’s set up your account in just a couple of steps.</p>
+        </div>
+
+        <div class="social-accounts">
+            <button type="submit" class="google">
+                <img src="{{ url_for('static', filename='google.svg')}}" alt="placeholder">
+                Google
+            </button>
+
+            <button type="submit" class="facebook">
+                <img src="{{ url_for('static', filename='facebook.svg')}}" alt="placeholder">
+                Facebook
+            </button>
+
+            <button type="submit" class="apple">
+                <img src="{{ url_for('static', filename='apple.svg')}}" alt="placeholder">
+                Apple
+            </button>
+        </div>
+
+        <div class="div-input-login">
+            {{ formsignup.csrf_token }}
+
+            <div class="div-email-name">
+                <div>
+                    {{ formsignup.name.label }}
+                    {{ formsignup.name }}
+                </div>
+
+                <div>
+                    {{ formsignup.email.label }}
+                    {{ formsignup.email }}
+                </div>
+            </div>
+
+            {{ formsignup.password.label }}
+            {{ formsignup.password }}
+
+            {{ formsignup.confirm_password.label }}
+            {{ formsignup.confirm_password }}
+
+            {{ formsignup.submit }}
+        </div>
+
+    </form>
+{% endblock %}
