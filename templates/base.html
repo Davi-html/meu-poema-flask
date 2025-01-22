@@ -10,6 +10,15 @@
     {% block header %}{%endblock%}
 </head>
 <body class="body-base">
-    {% block body %}{%endblock%}
+    <div>
+        {% include 'nav.html' %}
+    </div>
+
+    {% block body %}
+    {%endblock%}
+
+    <div class="rank">
+        {% include 'rank.html' %}
+    </div>
 </body>
 </html>

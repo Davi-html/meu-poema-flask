@@ -24,5 +24,10 @@ def signin():
     return render_template('signin.html', formsignin=formsignin)
 
 
+@app.route("/notification")
+def notification():
+    return render_template('notification.html')
+
+
 if __name__ == "__main__":
     app.run(debug=True)

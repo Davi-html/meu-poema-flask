@@ -7,7 +7,7 @@
   --bg-title-login: #262626;
 }
 
-.home {
+.body-base {
   display: grid;
   grid-template-columns: 221px 800px 1fr;
 }
