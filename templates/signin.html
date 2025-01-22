@@ -1,17 +1,50 @@
 {% include 'base.html' %}
 
 {% block body %}
-    <h1>signup</h1>
-    <form action="">
-        {{ formsignin.csrf_token }}
-        {{ formsignin.email.label }}
-        {{ formsignin.email }}
+    <form action="" class="signup signin">
+        <div class="title">
+            <img src="{{ url_for('static', filename='feather-solid.svg')}}" alt="placeholder">
+            <h1>Meu poema</h1>
+        </div>
+        <div class="description">
+            <p id="description-title">Great to see you!</p>
+            <p id="description-text">Let’s set up your account in just a couple of steps.</p>
+        </div>
 
-        {{ formsignin.password.label }}
-        {{ formsignin.password }}
+        <div class="social-accounts">
+            <button type="submit" class="google">
+                <img src="{{ url_for('static', filename='google.svg')}}" alt="placeholder">
+                Google
+            </button>
 
-        {{ formsignin.RememberPassword.label }}
-        {{ formsignin.RememberPassword }}
-        {{ formsignin.submit }}
+            <button type="submit" class="facebook">
+                <img src="{{ url_for('static', filename='facebook.svg')}}" alt="placeholder">
+                Facebook
+            </button>
+
+            <button type="submit" class="apple">
+                <img src="{{ url_for('static', filename='apple.svg')}}" alt="placeholder">
+                Apple
+            </button>
+        </div>
+
+        <div class="div-input-login">
+            {{ formsignin.csrf_token }}
+
+            {{ formsignin.email.label }}
+            {{ formsignin.email }}
+
+            {{ formsignin.password.label }}
+            {{ formsignin.password }}
+
+            {{ formsignin.submit }}
+
+            <p class="link">
+                <a href="/signup">
+                    Signup
+                </a>
+            </p>
+        </div>
+
     </form>
 {% endblock %}
