@@ -1,7 +1,7 @@
-{% include 'base.html' %}
+{% extends 'base.html' %}
 
 {% block body %}
-    <form action="" class="signup signin">
+    <form method="GET" action="" class="signup signin">
         <div class="title">
             <img src="{{ url_for('static', filename='feather-solid.svg')}}" alt="placeholder">
             <h1>Meu poema</h1>
@@ -31,14 +31,20 @@
         <div class="div-input-login">
             {{ formsignin.csrf_token }}
 
-            {{ formsignin.email.label }}
-            {{ formsignin.email }}
+            <div>
+                {{ formsignin.email.label }}
+                {{ formsignin.email }}
+            </div>
 
             {{ formsignin.password.label }}
             {{ formsignin.password }}
 
-            {{ formsignin.submit }}
+            <div class="div-lembrar-senha">
+                {{ formsignin.rememberPassword.label }}
+                {{ formsignin.rememberPassword}}
+            </div>
 
+            {{ formsignin.submit }}
             <p class="link">
                 <a href="/signup">
                     Signup

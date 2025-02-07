@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div class="notification-page">
+        <div class="notification-item">
+            <img src="{{ avatars.default(size='s') }}">
+            <div class="notification-content">
+                <p><strong>Nome do usuário</strong> curtiu seu poema</p>
+                <p>Nome do poema</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

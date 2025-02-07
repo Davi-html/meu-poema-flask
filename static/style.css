@@ -5,6 +5,8 @@
   --post: rgba(41, 40, 40, 0.8);
   --login-color: #8B8B8B;
   --bg-title-login: #262626;
+  --btn-message-color: #297ca2;
+  --btn-report-color: #A2292B ;
 }
 
 .body-base {
@@ -353,3 +355,102 @@
         }
     }
 }
+
+.notification-page {
+    padding: 20px;
+    color: white;
+    margin-left: 70px;
+    background-color: var(--post);
+}
+
+.div-lembrar-senha {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+    gap: 10px;
+
+}
+.div-lembrar-senha input {
+        width: fit-content;
+}
+
+.div-lembrar-senha label {
+    margin-bottom: 0;
+}
+
+.profile {
+    width: 689px;
+    height: 940px;
+    margin: 40px auto;
+    background-color: var(--post);
+    color: white;
+    padding: 30px;
+}
+
+.profile-header {
+    display: flex;
+    gap: 50px;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid var(--login-color);
+
+    .profile-name {
+        #name {
+            font-size: 20px;
+            font-weight: bold;
+            line-height: 24px;
+            letter-spacing: 0em;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        #username {
+            font-size: 15px;
+            letter-spacing: 0em;
+            text-align: center;
+            color: var(--login-color);
+        }
+    }
+
+    .profile-image img {
+        width: 146px;
+        height: 146px;
+        border-radius: 50%;
+    }
+
+    .profile-info{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        .followers {
+            display: flex;
+            gap: 30px;
+        }
+
+        .profile-btn-info button {
+            border-radius: 20px;
+            background-color: var(--btn-color);
+            border: none;
+            padding: 10px;
+        }
+
+        .profile-btn-info {
+            display: flex;
+            gap: 20px;
+
+            #follow {
+                background-color: var(--btn-color);
+            }
+
+            #message {
+                background-color: var(--btn-message-color);
+            }
+
+            #report {
+                background-color: var(--btn-report-color);
+            }
+        }
+    }
+}
+

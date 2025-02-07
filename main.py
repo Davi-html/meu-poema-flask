@@ -12,13 +12,13 @@ def home():
     return render_template('home.html', avatars=avatars)
 
 
-@app.route("/signup")
+@app.route("/signup", methods=['GET', 'POST'])
 def signup():
     formsignup = SignupForm()
     return render_template('signup.html', formsignup=formsignup)
 
 
-@app.route("/signin")
+@app.route("/signin", methods=['GET'])
 def signin():
     formsignin = SigninForm()
     return render_template('signin.html', formsignin=formsignin)
@@ -27,6 +27,11 @@ def signin():
 @app.route("/notification")
 def notification():
     return render_template('notification.html')
+
+
+@app.route("/profile")
+def profile():
+    return render_template('profile.html', avatars=avatars)
 
 
 if __name__ == "__main__":

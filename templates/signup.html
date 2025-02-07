@@ -1,7 +1,7 @@
-{% include 'base.html' %}
+{% extends 'base.html' %}
 
 {% block body %}
-    <form action="" class="signup signin">
+    <form method="POST" action="" class="signup signin">
         <div class="title">
             <img src="{{ url_for('static', filename='feather-solid.svg')}}" alt="placeholder">
             <h1>Meu poema</h1>

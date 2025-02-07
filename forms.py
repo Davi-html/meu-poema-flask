@@ -13,5 +13,5 @@ class SignupForm(flask_wtf.FlaskForm):
 class SigninForm(flask_wtf.FlaskForm):
     email = EmailField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired(), Length(min=8)])
-    RememberPassword = BooleanField('Lembrar dados de acesso')
+    rememberPassword = BooleanField('Lembrar dados de acesso')
     submit = SubmitField('Submit')
