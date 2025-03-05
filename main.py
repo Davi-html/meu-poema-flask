@@ -1,5 +1,7 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, flash, redirect, url_for
 from flask_avatars import Avatars
+from unicodedata import category
+
 from forms import SignupForm, SigninForm
 
 app = Flask(__name__)
@@ -15,12 +17,20 @@ def home():
 @app.route("/signup", methods=['GET', 'POST'])
 def signup():
     formsignup = SignupForm()
+
+    if formsignup.validate_on_submit():
+        flash(f'Conta criada para o e-mail {formsignup.email.data}', 'alert-success')
+        return redirect(url_for('home'))
     return render_template('signup.html', formsignup=formsignup)
 
 
 @app.route("/signin", methods=['GET'])
 def signin():
     formsignin = SigninForm()
+
+    if formsignin.validate_on_submit():
+        flash(f'Login feito com sucesso no e-mail {formsignin.email.data}', 'alert-success')
+        return redirect(url_for('home'))
     return render_template('signin.html', formsignin=formsignin)
 
 

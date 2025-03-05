@@ -2,6 +2,8 @@
 
 {% block body %}
     <form method="GET" action="" class="signup signin">
+        {{ formsignin.csrf_token }}
+
         <div class="title">
             <img src="{{ url_for('static', filename='feather-solid.svg')}}" alt="placeholder">
             <h1>Meu poema</h1>
@@ -29,15 +31,33 @@
         </div>
 
         <div class="div-input-login">
-            {{ formsignin.csrf_token }}
-
             <div>
                 {{ formsignin.email.label }}
-                {{ formsignin.email }}
+                {% if formsignin.email.errors %}
+                        {{ formsignin.email(class="form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in formsignin.email.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+
+                    {% else %}
+                        {{ formsignin.email }}
+                    {% endif %}
             </div>
 
             {{ formsignin.password.label }}
-            {{ formsignin.password }}
+            {% if formsigin.password.errors %}
+                {{ formsignin.password(class="form-control is-invalid") }}
+            <div class="invalid-feedback">
+                {% for error in formsignin.password.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            {% else %}
+                {{ formsignin.password }}
+            {% endif %}
 
             <div class="div-lembrar-senha">
                 {{ formsignin.rememberPassword.label }}

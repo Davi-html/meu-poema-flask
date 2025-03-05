@@ -2,6 +2,8 @@
 
 {% block body %}
     <form method="POST" action="" class="signup signin">
+        {{ formsignup.csrf_token }}
+
         <div class="title">
             <img src="{{ url_for('static', filename='feather-solid.svg')}}" alt="placeholder">
             <h1>Meu poema</h1>
@@ -29,25 +31,67 @@
         </div>
 
         <div class="div-input-login">
-            {{ formsignup.csrf_token }}
 
             <div class="div-email-name">
                 <div>
                     {{ formsignup.name.label }}
-                    {{ formsignup.name }}
+                    {% if formsignup.name.errors %}
+                        {{ formsignup.name(class="form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in formsignup.name.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+
+                    {% else %}
+                        {{ formsignup.name }}
+                    {% endif %}
                 </div>
 
                 <div>
                     {{ formsignup.email.label }}
-                    {{ formsignup.email }}
+
+                    {% if formsignup.email.errors %}
+                        {{ formsignup.email(class="form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in formsignup.email.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+
+                    {% else %}
+                        {{ formsignup.email }}
+                    {% endif %}
+
+
                 </div>
             </div>
 
             {{ formsignup.password.label }}
-            {{ formsignup.password }}
+            {% if formsignup.password.errors %}
+                {{ formsignup.password(class="form-control is-invalid") }}
+            <div class="invalid-feedback">
+                {% for error in formsignup.password.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            {% else %}
+                {{ formsignup.password }}
+            {% endif %}
 
             {{ formsignup.confirm_password.label }}
-            {{ formsignup.confirm_password }}
+            {% if formsignup.confirm_password.errors %}
+                {{ formsignup.confirm_password(class="form-control is-invalid") }}
+            <div class="invalid-feedback">
+                {% for error in formsignup.confirm_password.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            {% else %}
+                {{ formsignup.confirm_password }}
+            {% endif %}
 
             {{ formsignup.submit }}
             <p class="link">
