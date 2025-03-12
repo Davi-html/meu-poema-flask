@@ -1,6 +1,7 @@
 import flask_wtf
 from wtforms import StringField, SubmitField, PasswordField, EmailField, BooleanField
-from wtforms.validators import DataRequired, Email, EqualTo, Length
+from wtforms.validators import DataRequired, Email, EqualTo, Length, ValidationError
+
 
 class SignupForm(flask_wtf.FlaskForm):
     email = EmailField('Email', validators=[DataRequired(), Email()])

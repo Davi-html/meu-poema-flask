@@ -1,8 +1,8 @@
 from flask import render_template, flash, redirect, url_for
-from meuPoema import app, avatars
+from meuPoema import app, avatars, database, bcrypt
 from meuPoema.forms import SignupForm, SigninForm
 from meuPoema.models import User
-from meuPoema import database
+
 @app.route("/")
 def home():
     return render_template('home.html', avatars=avatars)
@@ -13,7 +13,8 @@ def signup():
     formsignup = SignupForm()
 
     if formsignup.validate_on_submit():
-        user = User(username=formsignup.name.data, email=formsignup.email.data, password=formsignup.password.data)
+        crypt_password = bcrypt.generate_password_hash(formsignup.password.data).decode('utf-8')
+        user = User(username=formsignup.name.data, email=formsignup.email.data, password=crypt_password)
         database.session.add(user)
         database.session.commit()
         flash(f'Conta criada para o e-mail {formsignup.email.data}', 'alert-success')
