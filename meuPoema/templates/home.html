@@ -5,11 +5,12 @@
         <div class="fy">
             <input type="text" class="input-search" placeholder="Pesquisar">
 
-            <div class="create-poem">
-                <img src="{{ avatars.default(size='s') }}">
-                <input type="text" placeholder="Escreva algo aqui">     
-            </div>
-
+            {% if current_user.is_authenticated %}
+                <div class="create-poem">
+                    <img src="{{ avatars.default(size='s') }}">
+                    <input type="text" placeholder="Escreva algo aqui">
+                </div>
+            {% endif %}
             {% include 'post.html' %}
         </div>
     </div>
