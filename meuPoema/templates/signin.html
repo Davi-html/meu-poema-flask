@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block body %}
-    <form method="GET" action="" class="signup signin">
+    <form method="POST" action="" class="signin">
         {{ formsignin.csrf_token }}
 
         <div class="title">
@@ -47,7 +47,7 @@
             </div>
 
             {{ formsignin.password.label }}
-            {% if formsigin.password.errors %}
+            {% if formsignin.password.errors %}
                 {{ formsignin.password(class="form-control is-invalid") }}
             <div class="invalid-feedback">
                 {% for error in formsignin.password.errors %}
