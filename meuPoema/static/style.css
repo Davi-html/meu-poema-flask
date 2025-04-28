@@ -378,7 +378,7 @@
     margin-bottom: 0;
 }
 
-.profile {
+.profile, .config {
     width: 689px;
     height: 940px;
     margin: 40px auto;
@@ -467,4 +467,34 @@ ul.flashes {
     }
 }
 
+.config-session-aparencia, .config-session-conta, .config-session-info{
+    h1 {
+        color: var(--btn-color);
+    }
 
+    .instagram {
+        text-decoration: none;
+        color: white;
+        font-size: 40px;
+    }
+}
+
+#excluir-conta a{
+    color: var(--btn-report-color);
+}
+
+.input-remove-config {
+    display: flex;
+    width: 220px;
+    justify-content: space-between;
+    align-items: center;
+
+    p {
+        margin: 0;
+    }
+
+     input {
+        min-width: 20px;
+        min-height: 20px;
+    }
+}

@@ -40,6 +40,10 @@ def signin():
     return render_template('signin.html', formsignin=formsignin)
 
 
+@app.route("/config")
+def config():
+    return render_template('config.html')
+
 @app.route("/notification")
 def notification():
     return render_template('notification.html')
@@ -54,7 +58,7 @@ def profile():
 def logout():
     logout_user()
     flash(f'logout feito com sucesso', 'alert-success')
-    return render_template(url_for('home'))
+    return render_template('home.html', avatars=avatars)
 
 @app.route("/post/create")
 def create_post():

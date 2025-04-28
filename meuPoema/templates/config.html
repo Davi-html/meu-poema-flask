@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div class="config">
+        <div class="config-session-aparencia">
+            <h1>Aparência</h1>
+            <div class="remove-rankin input-remove-config">
+                <p>Remover ranking da tela</p>
+                <label class="switch">
+                    <input type="checkbox" id="ranking-toggle">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+
+            <div class="remove-notifications input-remove-config">
+                <p>Remover notificações da tela</p>
+                <label class="switch">
+                    <input type="checkbox" id="notification-toggle">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="config-session-conta">
+            <h1>Conta</h1>
+
+            <p id="excluir-conta"><a href="{{ url_for('logout') }}">Excluir conta</a></p>
+            <p><a href="{{ url_for('logout') }}">Sair</a></p>
+        </div>
+
+        <hr>
+
+        <div class="config-session-info">
+            <h1>Informações</h1>
+
+            <p>Versão: 1.0.0</p>
+            <p>Perfil do criador:</p>
+            <a href="https://www.instagram.com/davi.fcxp/" target="_blank" class="instagram"><i class="bi bi-instagram"></i></a>
+        </div>
+    </div>
+{% endblock %}
