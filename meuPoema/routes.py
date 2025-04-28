@@ -2,7 +2,7 @@ from flask import render_template, flash, redirect, url_for, request
 from meuPoema import app, avatars, database, bcrypt
 from meuPoema.forms import SignupForm, SigninForm
 from meuPoema.models import User
-from flask_login import login_user
+from flask_login import login_user, logout_user
 
 @app.route("/")
 def home():
@@ -48,3 +48,14 @@ def notification():
 @app.route("/profile")
 def profile():
     return render_template('profile.html', avatars=avatars)
+
+
+@app.route("/logout")
+def logout():
+    logout_user()
+    flash(f'logout feito com sucesso', 'alert-success')
+    return render_template(url_for('home'))
+
+@app.route("/post/create")
+def create_post():
+    pass
