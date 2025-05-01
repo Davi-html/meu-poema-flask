@@ -60,7 +60,8 @@ def notification():
 @app.route("/profile")
 @login_required
 def profile():
-    return render_template('profile.html', avatars=avatars)
+    profile_pictures = url_for('static', filename='profile_pictures/' + current_user.foto_perfil)
+    return render_template('profile.html', avatars=avatars, profile_pictures=profile_pictures)
 
 
 @app.route("/logout")
