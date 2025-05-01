@@ -1,5 +1,5 @@
 from flask import render_template, flash, redirect, url_for, request
-from flask_login import login_user, logout_user, current_user
+from flask_login import login_user, logout_user, current_user, login_required
 
 from meuPoema import app, avatars, database, bcrypt
 from meuPoema.forms import SignupForm, SigninForm
@@ -42,25 +42,30 @@ def signin():
 
 
 @app.route("/config")
+@login_required
 def config():
     return render_template('config.html')
 
 @app.route("/notification")
+@login_required
 def notification():
     return render_template('notification.html')
 
 
 @app.route("/profile")
+@login_required
 def profile():
     return render_template('profile.html', avatars=avatars)
 
 
 @app.route("/logout")
+@login_required
 def logout():
     logout_user()
     flash(f'logout feito com sucesso', 'alert-success')
     return render_template('home.html', avatars=avatars)
 
 @app.route("/post/create")
+@login_required
 def create_post():
     pass
