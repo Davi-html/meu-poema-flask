@@ -498,3 +498,7 @@ ul.flashes {
         min-height: 20px;
     }
 }
+
+.avatar-profile {
+    object-fit: cover;
+}
