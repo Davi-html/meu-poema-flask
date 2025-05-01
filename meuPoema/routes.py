@@ -1,8 +1,9 @@
 from flask import render_template, flash, redirect, url_for, request
+from flask_login import login_user, logout_user, current_user
+
 from meuPoema import app, avatars, database, bcrypt
 from meuPoema.forms import SignupForm, SigninForm
 from meuPoema.models import User
-from flask_login import login_user, logout_user, current_user
 
 @app.route("/")
 def home():
