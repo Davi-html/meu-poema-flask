@@ -34,7 +34,12 @@ def signin():
         if user and bcrypt.check_password_hash(user.password, formsignin.password.data):
             login_user(user, remember=formsignin.rememberPassword.data)
             flash(f'Login feito com sucesso no e-mail {formsignin.email.data}', 'alert-success')
-            return redirect(url_for('home'))
+
+            param_next = request.args.get('next')
+            if param_next:
+                return redirect(param_next)
+            else:
+                return redirect(url_for('home'))
         else:
             flash('Login sem sucesso. Verifique seus dados de acesso', 'alert-danger')
 
