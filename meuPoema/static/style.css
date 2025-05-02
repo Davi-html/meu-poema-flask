@@ -7,6 +7,7 @@
   --bg-title-login: #262626;
   --btn-message-color: #297ca2;
   --btn-report-color: #A2292B ;
+  --btn-edit-color: #ce5e17;
 }
 
 .body-base {
@@ -387,7 +388,7 @@
     padding: 30px;
 }
 
-.profile-header {
+.profile-header, .edit-profile-header {
     display: flex;
     gap: 50px;
     align-items: center;
@@ -447,8 +448,8 @@
                 background-color: var(--btn-message-color);
             }
 
-            #report {
-                background-color: var(--btn-report-color);
+            #edit {
+                background-color: var(--btn-edit-color);
             }
         }
     }
@@ -501,4 +502,48 @@ ul.flashes {
 
 .avatar-profile {
     object-fit: cover;
+}
+
+.edit-profile {
+    #name, #email {
+        background-color: transparent;
+        outline: none;
+    }
+
+    #div-input-name, #div-input-email{
+        display: flex;
+        flex-direction: column;
+
+        margin-bottom: 20px;
+
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 2px solid var(--nav-bg);
+            border-radius: 5px;
+        }
+    }
+
+}
+
+.btn-edit-profile {
+    background-color: var(--btn-color);
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.edit-profile-header {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+
+    .profile-image {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
 }

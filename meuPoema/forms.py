@@ -21,3 +21,8 @@ class SigninForm(flask_wtf.FlaskForm):
     password = PasswordField('Password', validators=[DataRequired(), Length(min=8)])
     rememberPassword = BooleanField('Lembrar dados de acesso')
     submit = SubmitField('Submit')
+
+class FormEditProfile(flask_wtf.FlaskForm):
+    name = StringField('Name', validators=[DataRequired(), Length(min=3, max=30)])
+    email = EmailField('Email',validators=[DataRequired(), Email()])
+    submit = SubmitField('Editar')

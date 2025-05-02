@@ -21,9 +21,19 @@
                 <div class="profile-btn-info">
                     <button id="follow">Seguir</button>
                     <button id="message">Enviar mensagem</button>
-                    <button id="report">Denunciar</button>
+                    <a href="{{ url_for('edit_profile') }}" style="text-decoration: none; color: white;">
+                        <button id="edit">Editar perfil</button>
+                    </a>
                 </div>
             </div>
+        </div>
+
+        {% block form_edit_profile %}
+        {% endblock %}
+
+        <div>
+            <h2>Sobre mim</h2>
+            <p>{{ current_user.bio }}</p>
         </div>
     </div>
 {% endblock %}
