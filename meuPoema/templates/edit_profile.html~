@@ -2,7 +2,7 @@
 
 {% block body %}
     <div class="profile">
-        <form method="POST" action="" class="edit-profile" enctype="multipart/form-data">
+        <form method="POST" action="" class="edit-profile">
             {{ form.csrf_token }}
 
             <div class="edit-profile-header">
