@@ -1,7 +1,9 @@
 import flask_wtf
-from wtforms import StringField, SubmitField, PasswordField, EmailField, BooleanField
+from flask_wtf.file import FileField, FileAllowed
+from wtforms import StringField, SubmitField, PasswordField, EmailField, BooleanField, FileField
 from wtforms.validators import DataRequired, Email, EqualTo, Length, ValidationError
 from meuPoema.models import User
+
 
 class SignupForm(flask_wtf.FlaskForm):
     email = EmailField('Email', validators=[DataRequired(), Email()])
@@ -25,4 +27,5 @@ class SigninForm(flask_wtf.FlaskForm):
 class FormEditProfile(flask_wtf.FlaskForm):
     name = StringField('Name', validators=[DataRequired(), Length(min=3, max=30)])
     email = EmailField('Email',validators=[DataRequired(), Email()])
+    foto_perfil = FileField('Foto de Perfil',validators=[FileAllowed(['jpg', 'png', 'jpeg'], 'Apenas imagens são permitidas!')])
     submit = SubmitField('Editar')

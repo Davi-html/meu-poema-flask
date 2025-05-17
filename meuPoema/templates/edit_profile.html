@@ -3,49 +3,47 @@
 {% block body %}
     <div class="profile">
         <form method="POST" action="" class="edit-profile">
-        {{ form.csrf_token }}
+            {{ form.csrf_token }}
 
-        <div class="edit-profile-header">
-            <div class="profile-image profile-name">
-                <img src="{{ profile_pictures }}" alt="Avatar" class="avatar-profile">
-                <input type="file" id="file" name="file">
-            </div>
-        </div>
-
-        <div class="div-input-login">
-            <div id="div-input-name">
-                {{ form.name.label }}
-                {% if form.name.errors %}
-                    {{ form.name(class="form-control is-invalid") }}
-                <div class="invalid-feedback">
-                    {% for error in form.name.errors %}
-                        <p>{{ error }}</p>
-                    {% endfor %}
+            <div class="edit-profile-header">
+                <div class="profile-image profile-name">
+                    <img src="{{ profile_pictures }}" alt="Avatar" class="avatar-profile">
+                    {{  form.foto_perfil(class="form-control") }}
                 </div>
-
-                {% else %}
-                    {{ form.name(value=username) }}
-                {% endif %}
             </div>
-            <div id="div-input-email">
-                {{ form.email.label }}
-                {% if form.email.errors %}
-                        {{ form.email(class="form-control is-invalid") }}
+
+            <div class="div-input-login">
+                <div id="div-input-name">
+                    {{ form.name.label }}
+                    {% if form.name.errors %}
+                        {{ form.name(class="form-control is-invalid") }}
                     <div class="invalid-feedback">
-                        {% for error in form.email.errors %}
+                        {% for error in form.name.errors %}
                             <p>{{ error }}</p>
                         {% endfor %}
                     </div>
 
                     {% else %}
-                        {{ form.email(autocomplete="off", value=email) }}
+                        {{ form.name(value=username) }}
                     {% endif %}
+                </div>
+                <div id="div-input-email">
+                    {{ form.email.label }}
+                    {% if form.email.errors %}
+                            {{ form.email(class="form-control is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.email.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+
+                        {% else %}
+                            {{ form.email(autocomplete="off", value=email) }}
+                        {% endif %}
+                </div>
+
+                {{ form.submit(class="btn-edit-profile") }}
             </div>
-
-            {{ form.submit(class="btn-edit-profile") }}
-
-        </div>
-
-    </form>
+        </form>
     </div>
 {% endblock %}

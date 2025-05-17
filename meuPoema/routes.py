@@ -1,4 +1,5 @@
 from flask import render_template, flash, redirect, url_for, request
+import os
 from flask_login import login_user, logout_user, current_user, login_required
 
 from meuPoema import app, avatars, database, bcrypt
@@ -79,8 +80,19 @@ def edit_profile():
     email = current_user.email
     username = current_user.username
     profile_pictures = url_for('static', filename='profile_pictures/' + current_user.foto_perfil)
-    return  render_template('edit_profile.html', avatars=avatars, profile_pictures=profile_pictures, form=form, email=email, username=username)
 
+    if form.validate_on_submit() and "submit" in request.form:
+
+        if form.name.data:
+            current_user.username = form.name.data
+
+        if form.email.data:
+            current_user.email = form.email.data
+
+        database.session.commit()
+        flash(f'Perfil atualizado com sucesso', 'alert-success')
+        return redirect(url_for('profile'))
+    return  render_template('edit_profile.html', avatars=avatars, profile_pictures=profile_pictures, form=form, email=email, username=username)
 
 
 @app.route("/post/create")
