@@ -81,7 +81,7 @@ def save_image(imagem):
     nome, ext = os.path.splitext(imagem.filename)
     name_imagem = nome + random_hex + ext
     caminho = os.path.join(app.root_path, 'static/profile_pictures', name_imagem)
-    output_size = (300, 300)
+    output_size = (146, 146)
     image_resize = Image.open(imagem)
     image_resize.thumbnail(output_size)
     image_resize.save(caminho)
