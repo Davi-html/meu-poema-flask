@@ -8,7 +8,7 @@
         <div class="userRanking">
             {% for listaRankUser in listaRankUsers %}
                 <div class="user">
-                    <img src="{{ url_for('static', filename='profile_pictures/' + listaRankUser.foto_perfil) }}" alt="Avatar" style="width:30px; border-radius: 50%">
+                    <img src="{{ url_for('static', filename='profile_pictures/' + listaRankUser.foto_perfil) }}" alt="Avatar" style="width:25px; border-radius: 50%">
                     <p id="name">{{ listaRankUser.username }}</p>
                     <p id="followers">{{ listaRankUser.followers }}</p>
                 </div>

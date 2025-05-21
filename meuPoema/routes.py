@@ -11,7 +11,8 @@ from meuPoema.models import User
 
 @app.route("/")
 def home():
-    return render_template('home.html', avatars=avatars)
+    listaRankUsers = User.query.order_by(User.followers.desc()).limit(10).all()
+    return render_template('home.html', avatars=avatars, listaRankUsers=listaRankUsers)
 
 
 @app.route("/signup", methods=['GET', 'POST'])
