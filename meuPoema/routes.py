@@ -54,12 +54,14 @@ def signin():
 @app.route("/config")
 @login_required
 def config():
-    return render_template('config.html')
+    listaRankUsers = User.query.order_by(User.followers.desc()).limit(10).all()
+    return render_template('config.html', listaRankUsers=listaRankUsers)
 
 @app.route("/notification")
 @login_required
 def notification():
-    return render_template('notification.html')
+    listaRankUsers = User.query.order_by(User.followers.desc()).limit(10).all()
+    return render_template('notification.html', listaRankUsers=listaRankUsers)
 
 
 @app.route("/profile/<int:id>")
@@ -67,8 +69,9 @@ def notification():
 def profile(id):
     id = id
     user = User.query.filter_by(id=id).first()
+    listaRankUsers = User.query.order_by(User.followers.desc()).limit(10).all()
     profile_pictures = url_for('static', filename='profile_pictures/' + user.foto_perfil)
-    return render_template('profile.html', avatars=avatars, profile_pictures=profile_pictures, user=user)
+    return render_template('profile.html', avatars=avatars, profile_pictures=profile_pictures, user=user, listaRankUsers=listaRankUsers)
 
 
 

@@ -5,7 +5,7 @@
         <div class="profile-header">
 
             <div class="profile-image profile-name">
-                <img src="{{ profile_pictures. }}" alt="Avatar" class="avatar-profile">
+                <img src="{{ profile_pictures }}" alt="Avatar" class="avatar-profile">
                 <p id="name">
                     {{ user.username }}
                 </p>
@@ -21,9 +21,13 @@
                 <div class="profile-btn-info">
                     <button id="follow">Seguir</button>
                     <button id="message">Enviar mensagem</button>
-                    <a href="{{ url_for('edit_profile') }}" style="text-decoration: none; color: white;">
-                        <button id="edit">Editar perfil</button>
-                    </a>
+
+                    {% if user.id == current_user.id %}
+                        <a href="{{ url_for('edit_profile') }}" style="text-decoration: none; color: white;">
+                            <button id="edit">Editar perfil</button>
+                        </a>
+                    {% else %}
+                    {% endif %}
                 </div>
             </div>
         </div>
