@@ -22,12 +22,9 @@
                     <button id="follow">Seguir</button>
                     <button id="message">Enviar mensagem</button>
 
-                    {% if user.id == current_user.id %}
-                        <a href="{{ url_for('edit_profile') }}" style="text-decoration: none; color: white;">
-                            <button id="edit">Editar perfil</button>
-                        </a>
-                    {% else %}
-                    {% endif %}
+                    <a href="{{ url_for('edit_profile') }}" style="text-decoration: none; color: white;">
+                        <button id="edit">Editar perfil</button>
+                    </a>
                 </div>
             </div>
         </div>
