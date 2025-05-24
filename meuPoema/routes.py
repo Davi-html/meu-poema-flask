@@ -62,11 +62,15 @@ def notification():
     return render_template('notification.html')
 
 
-@app.route("/profile")
+@app.route("/profile/<int:id>")
 @login_required
-def profile():
+def profile(id):
     profile_pictures = url_for('static', filename='profile_pictures/' + current_user.foto_perfil)
-    return render_template('profile.html', avatars=avatars, profile_pictures=profile_pictures)
+    id = id
+    user = User.query.filter_by(id=id).first()
+
+    return render_template('profile.html', avatars=avatars, profile_pictures=profile_pictures, user=user)
+
 
 
 @app.route("/logout")
@@ -106,7 +110,7 @@ def edit_profile():
 
         database.session.commit()
         flash(f'Perfil atualizado com sucesso', 'alert-success')
-        return redirect(url_for('profile'))
+        return redirect(url_for('profile', id=current_user.id))
     return  render_template('edit_profile.html', profile_pictures=profile_pictures, form=form, email=email, username=username)
 
 

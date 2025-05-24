@@ -7,7 +7,7 @@
     <nav class="nav">
         <p><a href="{{ url_for('home') }}"><i class="bi bi-house"></i> Home</a></p>
         {% if current_user.is_authenticated %}
-            <p><a href="{{ url_for('profile', id=current_user.id) }}"><i class="bi bi-person"></i> Perfil</a></p>
+            <p><a href="{{ url_for('profile', id=id) }}"><i class="bi bi-person"></i> Perfil</a></p>
             <p><a href="{{ url_for('notification') }}"><i class="bi bi-bell"></i> Notificações</a></p>
             <p><a href="/meuPoema/static"><i class="bi bi-chat"></i> Mensagens</a></p>
             <p><a href="{{ url_for('config') }}"><i class="bi bi-gear"></i> Configurações</a></p>
