@@ -19,7 +19,11 @@
                 </div>
 
                 <div class="profile-btn-info">
-                    <button id="follow">Seguir</button>
+                    <form action="" method="POST">
+                        {{  followform.csrf_token }}
+                        {{ followform.follow }}
+                    </form>
+
                     <button id="message">Enviar mensagem</button>
 
                     {% if user.id == current_user.id %}
@@ -37,7 +41,7 @@
 
         <div>
             <h2>Sobre mim</h2>
-            <p>{{ user.bio }}</p>
+            <p>{{ post.content }}</p>
         </div>
     </div>
 {% endblock %}

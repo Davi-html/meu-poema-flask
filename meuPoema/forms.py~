@@ -31,5 +31,5 @@ class FormEditProfile(flask_wtf.FlaskForm):
     submit = SubmitField('Editar')
 
 class FollowForm(flask_wtf.FlaskForm):
-    follow = SubmitField('Seguir')
+    follow = SubmitField('follow')
     unfollow = SubmitField('Deixar de seguir')

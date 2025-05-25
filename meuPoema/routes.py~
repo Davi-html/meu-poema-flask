@@ -80,10 +80,10 @@ def profile(id):
                     flash(f'Você já segue {user.username}', 'alert-danger')
                     return redirect(url_for('profile', id=user.id))
 
-            follow = Follow(follower_id=current_user.id, followed_id=user.id)
-            database.session.add(follow)
-            database.session.commit()
-            flash(f'{current_user.username} começou a seguir {user.username}', 'alert-danger')
+                follow = Follow(follower_id=current_user.id, followed_id=user.id)
+                database.session.add(follow)
+                database.session.commit()
+                flash(f'{current_user.username} começou a seguir {user.username}', 'alert-danger')
         else:
             flash(f'Você não pode seguir a si mesmo', 'alert-danger')
 

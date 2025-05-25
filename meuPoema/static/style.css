@@ -442,7 +442,7 @@
             gap: 30px;
         }
 
-        .profile-btn-info button {
+        .profile-btn-info button, input {
             border-radius: 20px;
             background-color: var(--btn-color);
             border: none;

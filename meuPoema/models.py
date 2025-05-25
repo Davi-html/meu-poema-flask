@@ -16,8 +16,11 @@ class User(database.Model, UserMixin):
     foto_perfil = database.Column(database.String(), default='default.jpg')
     posts = database.relationship('Post', backref='author', lazy=True)
     bio = database.Column(database.String(), default='Sem biografia')
-    followers = database.Column(database.Integer(), default=0)
-    following = database.Column(database.Integer(), default=0)
+
+class Follow(database.Model):
+    id = database.Column(database.Integer, primary_key=True)
+    follower_id = database.Column(database.Integer, database.ForeignKey('user.id'), nullable=False)
+    followed_id = database.Column(database.Integer, database.ForeignKey('user.id'), nullable=False)
 
 class Post(database.Model):
     id = database.Column(database.Integer, primary_key=True)
