@@ -11,7 +11,6 @@ from meuPoema.models import User, Post, Follow
 
 @app.route("/")
 def home():
-    
     return render_template('home.html', avatars=avatars)
 
 
@@ -54,7 +53,6 @@ def signin():
 @app.route("/config")
 @login_required
 def config():
-    
     return render_template('config.html')
 
 @app.route("/notification")
