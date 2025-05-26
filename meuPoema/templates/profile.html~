@@ -16,7 +16,7 @@
                 <div class="followers">
                     <p>Seguindo {{ follow|length }}</p>
 
-                    <a href="/profile/{{ user.id }}/followers">
+                    <a href="/profile/{{ user.id }}/followers" style="color: white;">
                         <p>Seguidores {{ followers|length }}</p>
                     </a>
                 </div>
