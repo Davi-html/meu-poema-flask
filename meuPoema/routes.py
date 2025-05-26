@@ -134,3 +134,17 @@ def edit_profile():
 @login_required
 def create_post():
     pass
+
+
+def get_user(user_id):
+    return User.query.get(user_id)
+
+
+@app.route("/profile/<int:id>/followers")
+@login_required
+def followers(id):
+    user = User.query.filter_by(id=id).first()
+    user_followers = Follow.query.filter_by(followed_id=user.id).all()
+    user_following = Follow.query.filter_by(follower_id=user.id).all()
+
+    return render_template('followers.html', user=user, user_followers=user_followers, user_following=user_following, get_user=get_user)

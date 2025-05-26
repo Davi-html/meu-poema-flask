@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Followers</h1>
+    {% if user_followers %}
+        {% for follower in user_followers %}
+            {% set user = get_user(follower.follower_id) %}
+            <div class="follower">
+                {% if user %}
+                    <p>Follower: {{ user.username }}</p>
+                {% else %}
+                    <p>Usuário não encontrado</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>A lista está vazia</p>
+    {% endif %}
+</body>
+</html>
