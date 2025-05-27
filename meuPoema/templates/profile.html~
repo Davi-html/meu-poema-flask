@@ -36,6 +36,7 @@
                         </form>
                     {% endif %}
 
+
                     <button id="message">Enviar mensagem</button>
 
                     {% if user.id == current_user.id %}

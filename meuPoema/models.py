@@ -15,6 +15,7 @@ class User(database.Model, UserMixin):
     password = database.Column(database.String(),nullable=False)
     foto_perfil = database.Column(database.String(), default='default.jpg')
     posts = database.relationship('Post', backref='author', lazy=True)
+    followers = database.relationship('Follow', foreign_keys='Follow.followed_id', backref='followed', lazy=True)
     bio = database.Column(database.String(), default='Sem biografia')
 
 class Follow(database.Model):

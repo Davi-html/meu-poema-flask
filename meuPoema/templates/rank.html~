@@ -17,7 +17,7 @@
                         <p id="name">{{ rank.username }}</p>
                     </a>
 
-                    <p id="followers">{{ rank.followers|length }}</p>
+                    <p id="followers">{{ desc(rank.followers|length) }}</p>
                 </div>
             {% endfor %}
         </div>

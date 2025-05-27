@@ -66,6 +66,7 @@ def notification():
 def profile(id):
     id = id
     user = User.query.filter_by(id=id).first()
+    rank = database.session.query(User).all()
     followers = Follow.query.filter_by(followed_id=user.id).all()
     following = Follow.query.filter_by(follower_id=user.id).all()
     post = Post.query.filter_by(user_id=id).first()
@@ -104,7 +105,7 @@ def profile(id):
         else:
             flash(f'ocê não pode deixar de seguir a si mesmo', 'alert-danger')
 
-    return render_template('profile.html', avatars=avatars, profile_pictures=profile_pictures, user=user, post=post, followform=followform, following=following, followers=followers, is_following=is_following)
+    return render_template('profile.html', avatars=avatars, profile_pictures=profile_pictures, user=user, post=post, followform=followform, following=following, followers=followers, is_following=is_following, rank=rank)
 
 
 @app.route("/logout")
