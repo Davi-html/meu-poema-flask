@@ -7,12 +7,12 @@
 </head>
 <body>
     <h1>Followers</h1>
-    {% if user_followers %}
-        {% for follower in user_followers %}
-            {% set user = get_user(follower.follower_id) %}
+    {% if user_following %}
+        {% for following in user_following %}
+            {% set user = get_user(following.followed_id) %}
             <div class="follower">
                 {% if user %}
-                    <p>Follower: {{ user.username }}</p>
+                    <p>Following: {{ user.username }}</p>
                 {% else %}
                     <p>Usuário não encontrado</p>
                 {% endif %}

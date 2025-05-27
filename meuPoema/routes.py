@@ -87,7 +87,7 @@ def profile(id):
         else:
             flash(f'Você não pode seguir a si mesmo', 'alert-danger')
 
-    return render_template('profile.html', avatars=avatars, profile_pictures=profile_pictures, user=user, post=post, followform=followform, follow=following, followers=followers)
+    return render_template('profile.html', avatars=avatars, profile_pictures=profile_pictures, user=user, post=post, followform=followform, following=following, followers=followers)
 
 
 @app.route("/logout")
@@ -145,6 +145,13 @@ def get_user(user_id):
 def followers(id):
     user = User.query.filter_by(id=id).first()
     user_followers = Follow.query.filter_by(followed_id=user.id).all()
+
+    return render_template('followers.html', user=user, user_followers=user_followers, get_user=get_user)
+
+@app.route("/profile/<int:id>/following")
+@login_required
+def following(id):
+    user = User.query.filter_by(id=id).first()
     user_following = Follow.query.filter_by(follower_id=user.id).all()
 
-    return render_template('followers.html', user=user, user_followers=user_followers, user_following=user_following, get_user=get_user)
+    return render_template('following.html', user=user, user_following=user_following, get_user=get_user)
