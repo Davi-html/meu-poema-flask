@@ -24,10 +24,18 @@
                 </div>
 
                 <div class="profile-btn-info">
-                    <form action="" method="POST">
-                        {{  followform.csrf_token }}
-                        {{ followform.follow }}
-                    </form>
+                    {% if is_following %}
+                        <form action="" method="POST">
+                            {{ followform.csrf_token }}
+                            {{ followform.unfollow }}
+                        </form>
+                    {% else %}
+                        <form action="" method="POST">
+                            {{ followform.csrf_token }}
+                            {{ followform.follow }}
+                        </form>
+                    {% endif %}
+
 
                     <button id="message">Enviar mensagem</button>
 
