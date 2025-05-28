@@ -72,6 +72,7 @@ def profile(id):
             .outerjoin(User.followers)
             .group_by(User.id)
             .order_by(func.count(User.followers).desc())
+            .limit(5)
             .all())
     followers = Follow.query.filter_by(followed_id=user.id).all()
     following = Follow.query.filter_by(follower_id=user.id).all()
