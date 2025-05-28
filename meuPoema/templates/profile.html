@@ -24,19 +24,26 @@
                 </div>
 
                 <div class="profile-btn-info">
-                    {% if is_following %}
-                        <form action="" method="POST">
-                            {{ followform.csrf_token }}
-                            {{ followform.unfollow }}
-                        </form>
+                    {% if user.id == current_user.id %}
+
                     {% else %}
-                        <form action="" method="POST">
-                            {{ followform.csrf_token }}
-                            {{ followform.follow }}
-                        </form>
+                        {% if is_following %}
+                            <form action="" method="POST">
+                                {{ followform.csrf_token }}
+                                {{ followform.unfollow }}
+                            </form>
+                        {% else %}
+                            <form action="" method="POST">
+                                {{ followform.csrf_token }}
+                                {{ followform.follow }}
+                            </form>
+                        {% endif %}
                     {% endif %}
 
-                    <button id="message">Enviar mensagem</button>
+                    {% if user.id == current_user.id %}
+                    {% else %}
+                        <button id="message">Enviar mensagem</button>
+                    {% endif %}
 
                     {% if user.id == current_user.id %}
                         <a href="{{ url_for('edit_profile') }}" style="text-decoration: none; color: white;">

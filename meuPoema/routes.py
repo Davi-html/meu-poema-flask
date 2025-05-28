@@ -99,6 +99,7 @@ def profile(id):
             database.session.add(follow)
             database.session.commit()
             flash(f'{current_user.username} começou a seguir {user.username}', 'alert-danger')
+            return redirect(url_for('profile', id=user.id))
         else:
             flash(f'Você não pode seguir a si mesmo', 'alert-danger')
 
@@ -109,6 +110,7 @@ def profile(id):
                     database.session.delete(follow)
                     database.session.commit()
                     flash(f'{current_user.username} deixou de seguir {user.username}', 'alert-danger')
+                    return redirect(url_for('profile', id=user.id))
         else:
             flash(f'ocê não pode deixar de seguir a si mesmo', 'alert-danger')
 
