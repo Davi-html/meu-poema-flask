@@ -2,6 +2,8 @@ import os
 import secrets
 from PIL import Image
 
+from sqlalchemy import func
+
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, logout_user, current_user, login_required
 
@@ -66,7 +68,11 @@ def notification():
 def profile(id):
     id = id
     user = User.query.filter_by(id=id).first()
-    rank = database.session.query(User).all()
+    rank = (database.session.query(User)
+            .outerjoin(User.followers)
+            .group_by(User.id)
+            .order_by(func.count(User.followers).desc())
+            .all())
     followers = Follow.query.filter_by(followed_id=user.id).all()
     following = Follow.query.filter_by(follower_id=user.id).all()
     post = Post.query.filter_by(user_id=id).first()
