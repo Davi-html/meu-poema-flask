@@ -6,13 +6,16 @@
 
             <div class="notification-content">
                 {% for notification in notification %}
-                    <p>
-                        <a href="{{ url_for('profile', id=notification.user.id) }}">
-                            {{ notification.user.username }}
-                        </a>
+                    {% if notification.is_read == False %}
+                        <p>
+                            <a href="{{ url_for('profile', id=notification.user.id) }}">
+                                {{ notification.user.username }}
+                            </a>
 
-                        {{ notification.message }}
-                    </p>
+                            {{ notification.message }}
+                        </p>
+                    {% else %}
+                    {% endif %}
                 {% endfor %}
             </div>
         </div>
