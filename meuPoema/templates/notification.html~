@@ -6,13 +6,7 @@
 
             <div class="notification-content">
                 {% for notification in notification %}
-                    <p>
-                        <a href="{{ url_for('profile', id=notification.user.id) }}">
-                            {{ notification.user.username }}
-                        </a>
-
-                        {{ notification.message }}
-                    </p>
+                    <p>{{ notification.user.username }} {{ notification.message }}</p>
                 {% endfor %}
             </div>
         </div>
