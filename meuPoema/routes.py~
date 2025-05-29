@@ -99,7 +99,7 @@ def profile(id):
             database.session.add(follow)
             database.session.commit()
 
-            notification = Notification(recever_id=user.id, sender_id=current_user.id, message=f'{current_user.username} comecou a seguir voce', is_read=False)
+            notification = Notification(recever_id=user.id, sender_id=current_user.id, message=f'comecou a seguir voce', is_read=False)
 
             # Verifica se a notificação já existe
             existing_notification = Notification.query.filter_by(
