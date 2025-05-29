@@ -13,7 +13,8 @@ from meuPoema.models import User, Post, Follow, Notification
 
 @app.route("/")
 def home():
-    return render_template('home.html', avatars=avatars)
+    rank = lista_rank()
+    return render_template('home.html', avatars=avatars, rank=rank)
 
 
 @app.route("/signup", methods=['GET', 'POST'])
@@ -55,25 +56,22 @@ def signin():
 @app.route("/config")
 @login_required
 def config():
-    return render_template('config.html')
+    rank = lista_rank()
+    return render_template('config.html', rank=rank)
 
 @app.route("/notification")
 @login_required
 def notification():
     notification = Notification.query.filter_by(recever_id=current_user.id).order_by(Notification.date_created.desc()).all()
-    return render_template('notification.html', notification=notification, current_user=current_user)
+    rank = lista_rank()
+    return render_template('notification.html', notification=notification, current_user=current_user, rank=rank)
 
 @app.route("/profile/<int:id>", methods=['GET', 'POST'])
 @login_required
 def profile(id):
     id = id
+    rank = lista_rank()
     user = User.query.filter_by(id=id).first()
-    rank = (database.session.query(User)
-            .outerjoin(User.followers)
-            .group_by(User.id)
-            .order_by(func.count(User.followers).desc())
-            .limit(5)
-            .all())
     followers = Follow.query.filter_by(followed_id=user.id).all()
     following = Follow.query.filter_by(follower_id=user.id).all()
     post = Post.query.filter_by(user_id=id).first()
@@ -131,7 +129,14 @@ def profile(id):
 
     return render_template('profile.html', avatars=avatars, profile_pictures=profile_pictures, user=user, post=post, followform=followform, following=following, followers=followers, is_following=is_following, rank=rank)
 
-
+def lista_rank():
+    rank = (database.session.query(User)
+            .outerjoin(User.followers)
+            .group_by(User.id)
+            .order_by(func.count(User.followers).desc())
+            .limit(5)
+            .all())
+    return rank
 @app.route("/logout")
 @login_required
 def logout():
