@@ -17,6 +17,7 @@ class User(database.Model, UserMixin):
     posts = database.relationship('Post', backref='author', lazy=True)
     followers = database.relationship('Follow', foreign_keys='Follow.followed_id', backref='followed', lazy=True)
     bio = database.Column(database.String(), default='Sem biografia')
+    notifications = database.relationship('Notification', backref='user', lazy=True)
 
 class Follow(database.Model):
     id = database.Column(database.Integer, primary_key=True)
@@ -29,3 +30,11 @@ class Post(database.Model):
     content = database.Column(database.Text(), nullable=False)
     date_posted = database.Column(database.DateTime(), nullable=False, default=datetime.utcnow)
     user_id = database.Column(database.Integer, database.ForeignKey('user.id'), nullable=False)
+
+class Notification(database.Model):
+    id = database.Column(database.Integer, primary_key=True)
+    sender_id = database.Column(database.Integer, database.ForeignKey('user.id'), nullable=False)
+    recever_id = database.Column(database.Integer, nullable=False)
+    message = database.Column(database.String(), nullable=False)
+    date_created = database.Column(database.DateTime(), nullable=False, default=datetime.utcnow)
+    is_read = database.Column(database.Boolean(), default=False)

@@ -9,7 +9,7 @@ from flask_login import login_user, logout_user, current_user, login_required
 
 from meuPoema import app, avatars, database, bcrypt
 from meuPoema.forms import SignupForm, SigninForm, FormEditProfile, FollowForm
-from meuPoema.models import User, Post, Follow
+from meuPoema.models import User, Post, Follow, Notification
 
 @app.route("/")
 def home():
@@ -98,6 +98,21 @@ def profile(id):
             follow = Follow(follower_id=current_user.id, followed_id=user.id)
             database.session.add(follow)
             database.session.commit()
+
+            notification = Notification(recever_id=user.id, sender_id=current_user.id, message=f'{current_user.username} comecou a seguir voce', is_read=False)
+
+            # Verifica se a notificação já existe
+            existing_notification = Notification.query.filter_by(
+                recever_id=user.id,
+                sender_id=current_user.id
+            ).first()
+
+            if existing_notification:
+                flash(f'{current_user.username} começou a seguir {user.username}', 'alert-danger')
+                return redirect(url_for('profile', id=user.id))
+            else:
+                database.session.add(notification)
+                database.session.commit()
             flash(f'{current_user.username} começou a seguir {user.username}', 'alert-danger')
             return redirect(url_for('profile', id=user.id))
         else:
