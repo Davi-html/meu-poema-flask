@@ -9,7 +9,12 @@ from flask_login import login_user, logout_user, current_user, login_required
 
 from meuPoema import app, avatars, database, bcrypt
 from meuPoema.forms import SignupForm, SigninForm, FormEditProfile, FollowForm
-from meuPoema.models import User, Post, Follow, Notification
+from meuPoema.models import User, Post, Follow, Notification, Messages
+
+from flask_socketio import SocketIO, emit, join_room
+
+# Adicione após a criação do app Flask
+socketio = SocketIO(app)
 
 @app.route("/")
 def home():

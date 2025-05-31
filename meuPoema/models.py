@@ -38,3 +38,10 @@ class Notification(database.Model):
     message = database.Column(database.String(), nullable=False)
     date_created = database.Column(database.DateTime(), nullable=False, default=datetime.utcnow)
     is_read = database.Column(database.Boolean(), default=False)
+
+class Messages(database.Model):
+    id = database.Column(database.Integer, primary_key=True)
+    sender_id = database.Column(database.Integer, database.ForeignKey('user.id'), nullable=False)
+    recever_id = database.Column(database.Integer, nullable=False)
+    message = database.Column(database.String(), nullable=False)
+    date_created = database.Column(database.DateTime(), nullable=False, default=datetime.utcnow)

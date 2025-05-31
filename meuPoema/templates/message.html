@@ -3,73 +3,213 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enviar Mensagem</title>
-    <!-- Bootstrap CSS -->
+    <title>Chat - {{ sender.username }} e {{ recever.username }}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        .message-container {
-            max-width: 600px;
-            margin: 30px auto;
-            padding: 20px;
+        .chat-container {
+            max-width: 800px;
+            margin: 20px auto;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            overflow: hidden;
         }
-        .user-info {
+        .chat-header {
+            background-color: #0d6efd;
+            color: white;
+            padding: 15px;
             display: flex;
             align-items: center;
-            margin-bottom: 20px;
         }
-        .user-info img {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            margin-right: 15px;
+        .chat-messages {
+            height: 500px;
+            overflow-y: auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
         }
-        .message-form textarea {
-            resize: vertical;
-            min-height: 150px;
+        .message {
+            margin-bottom: 15px;
+            max-width: 70%;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .received {
+            align-self: flex-start;
+            background-color: white;
+            padding: 10px 15px;
+            border-radius: 0 10px 10px 10px;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+        }
+        .sent {
+            align-self: flex-end;
+            background-color: #d1e7dd;
+            padding: 10px 15px;
+            border-radius: 10px 0 10px 10px;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+        }
+        .message-time {
+            font-size: 0.8rem;
+            color: #6c757d;
+            margin-top: 5px;
+        }
+        .chat-input {
+            padding: 15px;
+            background-color: white;
+            border-top: 1px solid #dee2e6;
+            display: flex;
+        }
+        .typing-indicator {
+            font-style: italic;
+            color: #6c757d;
+            padding: 5px 15px;
+            font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="message-container bg-white">
-            <h2 class="text-center mb-4">Enviar Mensagem</h2>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show mt-3" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
 
-            <!-- Exibir mensagens flash -->
-            {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    {% for category, message in messages %}
-                        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-                            {{ message }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    {% endfor %}
-                {% endif %}
-            {% endwith %}
-
-            <div class="user-info">
-                <div>
-                    <p class="mb-1"><strong>De:</strong> {{ sender.username }}</p>
-                    <p class="mb-1"><strong>Para:</strong> {{ receiver.username }}</p>
+        <div class="chat-container bg-white">
+            <div class="chat-header">
+                <i class="fas fa-arrow-left me-2" onclick="history.back()" style="cursor: pointer;"></i>
+                <div style="flex-grow: 1;">
+                    <h5 class="mb-0">Conversa com {{ recever.username }}</h5>
+                </div>
+                <div id="connection-status" class="badge bg-success">
+                    <i class="fas fa-circle"></i> Online
                 </div>
             </div>
 
-            <form method="POST" class="message-form">
-                <div class="mb-3">
-                    <label for="message" class="form-label">Mensagem:</label>
-                    <textarea class="form-control" id="message" name="message" required></textarea>
-                </div>
+            <div class="chat-messages" id="chat-messages">
+                {% if not messages %}
+                    <div class="text-center text-muted my-4" id="empty-chat">
+                        <i class="fas fa-comment-dots"></i> Comece sua conversa com {{ recever.username }}
+                    </div>
+                {% else %}
+                    {% for msg in messages %}
+                        <div class="message {% if msg.sender_id == current_user.id %}sent{% else %}received{% endif %}">
+                            <div class="message-text">{{ msg.message }}</div>
+                            <div class="message-time">
+                                {{ msg.date_created.strftime('%H:%M') }}
+                                {% if msg.sender_id == current_user.id %}
+                                    <i class="fas fa-check{% if msg.read %} double-check{% endif %} ms-1"></i>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
 
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <a href="{{ url_for('home') }}" class="btn btn-secondary me-md-2">Voltar</a>
-                    <button type="submit" class="btn btn-primary">Enviar Mensagem</button>
-                </div>
+            <form class="chat-input" id="message-form">
+                <input type="text" class="form-control me-2" id="message-input" placeholder="Digite sua mensagem..." autocomplete="off" required>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
             </form>
         </div>
     </div>
 
-    <!-- Bootstrap JS -->
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Configuração do Socket.IO
+        const socket = io();
+        const currentUserId = {{ current_user.id }};
+        const senderId = {{ sender.id }};
+        const receverId = {{ recever.id }};
+        const chatRoom = `chat_${Math.min(senderId, receverId)}_${Math.max(senderId, receverId)}`;
+        const emptyChat = document.getElementById('empty-chat');
+
+        // Conecta à sala do chat
+        socket.emit('join_chat', {
+            user_id: currentUserId,
+            room: chatRoom
+        });
+
+        // Recebe novas mensagens
+        socket.on('new_message', (data) => {
+            const isCurrentUser = data.sender_id === currentUserId;
+
+            const messageElement = `
+                <div class="message ${isCurrentUser ? 'sent' : 'received'}">
+                    <div class="message-text">${data.message}</div>
+                    <div class="message-time">
+                        ${data.date_created}
+                        ${isCurrentUser ? '<i class="fas fa-check ms-1"></i>' : ''}
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('chat-messages').insertAdjacentHTML('beforeend', messageElement);
+
+            if (emptyChat) emptyChat.remove();
+            scrollToBottom();
+        });
+
+        // Status de conexão
+        socket.on('connect', () => {
+            document.getElementById('connection-status').className = 'badge bg-success';
+            document.getElementById('connection-status').innerHTML = '<i class="fas fa-circle"></i> Online';
+        });
+
+        socket.on('disconnect', () => {
+            document.getElementById('connection-status').className = 'badge bg-danger';
+            document.getElementById('connection-status').innerHTML = '<i class="fas fa-circle"></i> Offline';
+        });
+
+        // Envio de mensagem
+        document.getElementById('message-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const messageInput = document.getElementById('message-input');
+            const message = messageInput.value.trim();
+
+            if (message) {
+                try {
+                    const response = await fetch(`/${senderId}/message/${receverId}/`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: `message=${encodeURIComponent(message)}`
+                    });
+
+                    if (response.ok) {
+                        messageInput.value = '';
+                        messageInput.focus();
+                    }
+                } catch (error) {
+                    console.error('Erro ao enviar mensagem:', error);
+                }
+            }
+        });
+
+        // Funções auxiliares
+        function scrollToBottom() {
+            const chatMessages = document.getElementById('chat-messages');
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Rola para baixo ao carregar e mantém foco no input
+        window.addEventListener('DOMContentLoaded', () => {
+            scrollToBottom();
+            document.getElementById('message-input').focus();
+        });
+    </script>
 </body>
 </html>
