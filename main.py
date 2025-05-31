@@ -5,9 +5,7 @@ from meuPoema.models import User, Messages
 from flask_socketio import SocketIO, emit, join_room
 from datetime import datetime
 
-
 socketio = SocketIO(app, cors_allowed_origins="*")
-
 
 @app.route("/<int:sender>/message/<int:recever>/", methods=['GET', 'POST'])
 @login_required
