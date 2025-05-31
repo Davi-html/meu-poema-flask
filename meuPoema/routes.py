@@ -203,3 +203,38 @@ def following(id):
     user_following = Follow.query.filter_by(follower_id=user.id).all()
 
     return render_template('following.html', user=user, user_following=user_following, get_user=get_user)
+
+@app.route("/<int:sender>/message/<int:receiver>/", methods=['GET', 'POST'])
+@login_required
+def message(sender, receiver):
+    sender_user = User.query.get(sender)
+    receiver_user = User.query.get(receiver)
+
+    if sender_user.id == receiver_user.id:
+        flash('Ops, algo deu errado', 'alert-danger')
+        return redirect(url_for('home'))
+
+    if sender_user.id != current_user.id:
+        flash('Você não pode enviar mensagens em nome de outro usuário', 'alert-danger')
+        return redirect(url_for('home'))
+
+    if not sender_user or not receiver_user:
+        flash('Usuário não encontrado', 'alert-danger')
+        return redirect(url_for('home'))
+
+    if request.method == 'POST':
+        message_content = request.form.get('message')
+        if message_content:
+            notification = Notification(
+                sender_id=sender,
+                recever_id=receiver,
+                message=message_content,
+                is_read=False
+            )
+            database.session.add(notification)
+            database.session.commit()
+            flash('Mensagem enviada com sucesso!', 'alert-success')
+        else:
+            flash('Mensagem não pode ser vazia', 'alert-danger')
+
+    return render_template('message.html', sender=sender_user, receiver=receiver_user)
