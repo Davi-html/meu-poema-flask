@@ -626,4 +626,12 @@ ul.flashes {
 
 .messagePage-messages {
     display: flex;
+    margin-top: 20px;
+
+    .messagePage-info {
+        display: flex;
+        flex-direction: column;
+
+    }
+
 }
