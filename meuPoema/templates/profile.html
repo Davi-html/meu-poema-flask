@@ -42,7 +42,7 @@
 
                     {% if user.id == current_user.id %}
                     {% else %}
-                        <a href="{{ url_for('message', sender=current_user.id, receiver=user.id) }} " style="text-decoration: none; color: white;">
+                        <a href="{{ url_for('message', sender=current_user.id, recever=user.id) }} " style="text-decoration: none; color: white;">
                             <button id="message">Enviar mensagem</button>
                         </a>
 

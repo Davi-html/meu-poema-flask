@@ -9,7 +9,8 @@ from flask_login import login_user, logout_user, current_user, login_required
 
 from meuPoema import app, avatars, database, bcrypt
 from meuPoema.forms import SignupForm, SigninForm, FormEditProfile, FollowForm
-from meuPoema.models import User, Post, Follow, Notification
+from meuPoema.models import User, Post, Follow, Notification, Messages
+
 
 @app.route("/")
 def home():
@@ -20,7 +21,7 @@ def home():
 @app.route("/signup", methods=['GET', 'POST'])
 def signup():
     formsignup = SignupForm()
-
+    rank = lista_rank()
     if formsignup.validate_on_submit():
         crypt_password = bcrypt.generate_password_hash(formsignup.password.data)
         user = User(username=formsignup.name.data, email=formsignup.email.data, password=crypt_password)
@@ -28,13 +29,13 @@ def signup():
         database.session.commit()
         flash(f'Conta criada para o e-mail {formsignup.email.data}', 'alert-success')
         return redirect(url_for('home'))
-    return render_template('signup.html', formsignup=formsignup)
+    return render_template('signup.html', formsignup=formsignup, rank=rank)
 
 
 @app.route("/signin", methods=['GET', 'POST'])
 def signin():
     formsignin = SigninForm()
-
+    rank = lista_rank()
     if formsignin.validate_on_submit():
         user = User.query.filter_by(email=formsignin.email.data).first()
 
@@ -50,7 +51,7 @@ def signin():
         else:
             flash('Login sem sucesso. Verifique seus dados de acesso', 'alert-danger')
 
-    return render_template('signin.html', formsignin=formsignin)
+    return render_template('signin.html', formsignin=formsignin, rank=rank)
 
 
 @app.route("/config")
@@ -204,3 +205,10 @@ def following(id):
 
     return render_template('following.html', user=user, user_following=user_following, get_user=get_user)
 
+@app.route("/message")
+@login_required
+def messagePage():
+    rank = lista_rank()
+
+    message = Messages.query.filter((Messages.sender_id == current_user.id) | (Messages.recever_id == current_user.id)).order_by(Messages.date_created.desc()).all()
+    return render_template('messagePage.html', rank=rank, message=message, current_user=current_user, get_user=get_user)

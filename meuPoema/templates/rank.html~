@@ -9,7 +9,7 @@
             {% for rank in rank %}
                 <div class="user">
                     <p>{{ loop.index }}</p>
-                    <a href="{{  url_for('profile', id=rank.id) }}">
+                    <a href="{{  url_for('profile', id=rank.id, ) }}">
                         <img src="{{ url_for('static', filename='profile_pictures/' + rank.foto_perfil) }}" class="img-rank" alt="Avatar">
                     </a>
 
@@ -17,7 +17,7 @@
                         <p id="name">{{ rank.username }}</p>
                     </a>
 
-                    <p id="followers">{{ desc(rank.followers|length) }}</p>
+                    <p id="followers">{{ rank.followers|length }}</p>
                 </div>
             {% endfor %}
         </div>

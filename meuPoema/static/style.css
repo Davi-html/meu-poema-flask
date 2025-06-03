@@ -392,7 +392,7 @@
     margin-bottom: 0;
 }
 
-.profile, .config {
+.profile, .config, .messagePage {
     width: 689px;
     height: 940px;
     margin: 40px auto;
@@ -622,4 +622,8 @@ ul.flashes {
     color: #6c757d;
     padding: 5px 15px;
     font-size: 0.9rem;
+}
+
+.messagePage-messages {
+    display: flex;
 }
