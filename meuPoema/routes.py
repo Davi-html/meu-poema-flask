@@ -210,5 +210,5 @@ def following(id):
 def messagePage():
     rank = lista_rank()
 
-    message = Messages.query.filter((Messages.sender_id == current_user.id) | (Messages.recever_id == current_user.id)).order_by(Messages.date_created.desc()).all()
+    message = Messages.query.order_by(Messages.date_created.desc()).all()
     return render_template('messagePage.html', rank=rank, message=message, current_user=current_user, get_user=get_user)

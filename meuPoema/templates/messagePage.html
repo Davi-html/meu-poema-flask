@@ -3,19 +3,21 @@
 {% block body %}
     <div class="messagePage">
         <div>
-            {% set rendered_receivers = [] %}
+            {% set seen_senders = {} %}
             {% for message in message %}
-                {% if message.recever_id not in rendered_receivers %}
-                    {% if message.sender_id != current_user.id %}
-                        <div class="messagePage-messages">
-                            {% set user = get_user(message.sender_id) %}
-                            <img src="{{ url_for('static', filename='profile_pictures/' + user.foto_perfil ) }}" alt="Poem Image" class="poemImage" style="border-radius: 50%; width: 80px; height: 80px; margin-left: 10px" />
-                            <div>
-                                {{ message.message }}
-                            </div>
+                {% if message.sender_id != current_user.id and message.sender_id not in seen_senders %}
+                    {% set _ = seen_senders.update({message.sender_id: true}) %}
+                    <div class="messagePage-messages">
+                        {% set user = get_user(message.sender_id) %}
+                        <img src="{{ url_for('static', filename='profile_pictures/' + user.foto_perfil ) }}"
+                             alt="User Image"
+                             class="poemImage"
+                             style="border-radius: 50%; width: 80px; height: 80px; margin-right: 15px" />
+                        <div>
+                            <strong>{{ user.username }}</strong><br>
+                            {{ message.message }}
                         </div>
-                    {% endif %}
-                    {% set _ = rendered_receivers.append(message.recever_id) %}
+                    </div>
                 {% endif %}
             {% endfor %}
         </div>
