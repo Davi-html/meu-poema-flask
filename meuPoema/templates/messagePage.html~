@@ -9,7 +9,7 @@
                     {% set _ = seen_senders.update({message.sender_id: true}) %}
                     <div class="messagePage-messages">
                         {% set user = get_user(message.sender_id) %}
-                        <a href="{{ url_for('profile', id=user.id) }}">
+                        <a href="">
                             <img src="{{ url_for('static', filename='profile_pictures/' + user.foto_perfil ) }}"
                              alt="User Image"
                              class="poemImage"
