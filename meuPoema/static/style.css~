@@ -632,7 +632,6 @@ ul.flashes {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        gap: 10px;
     }
 
 }
