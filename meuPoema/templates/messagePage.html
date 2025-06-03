@@ -19,7 +19,12 @@
                         <div class="messagePage-info">
 
                             <a href="{{ url_for('profile', id=user.id) }}">
-                                <strong>{{ user.username }}</strong>
+                                {% if user.username|length > 82 %}
+                                    <strong>{{ user.username[:82] + '...' }}</strong>
+                                {% else %}
+                                    <p>{{ user.username }}</p>
+                                {% endif %}
+
                             </a>
                             <a href="{{ url_for('message', sender=message.recever_id, recever=message.sender_id) }}" class="messagePage-message" style="color: white">
                                 {% if message.message|length > 82 %}
