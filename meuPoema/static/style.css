@@ -634,9 +634,16 @@ ul.flashes {
         justify-content: center;
         gap: 10px;
 
-        strong {
-            font-size: 20px;
-        }
     }
 
+}
+
+#submit {
+    background-color: var(--btn-color);
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
 }

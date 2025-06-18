@@ -1,33 +1,40 @@
 <div>
-    <div class="followers">
-        <div class="title">
-            <p>Ranking</p>
-            <p>Seguidores</p>
+    {% if current_user.configRanking %}
+    {% else %}
+        <div class="followers">
+            <div class="title">
+                <p>Ranking</p>
+                <p>Seguidores</p>
+            </div>
+
+            <div class="userRanking">
+                {% for rank in rank %}
+                    <div class="user">
+                        <p>{{ loop.index }}</p>
+                        <a href="{{  url_for('profile', id=rank.id) }}">
+                            <img src="{{ url_for('static', filename='profile_pictures/' + rank.foto_perfil) }}" class="img-rank" alt="Avatar">
+                        </a>
+
+                        <a href="{{  url_for('profile', id=rank.id) }}">
+                            <p id="name">{{ rank.username }}</p>
+                        </a>
+
+                        <p id="followers">{{ rank.followers|length }}</p>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
+    {% endif %}
 
-        <div class="userRanking">
-            {% for rank in rank %}
-                <div class="user">
-                    <p>{{ loop.index }}</p>
-                    <a href="{{  url_for('profile', id=rank.id) }}">
-                        <img src="{{ url_for('static', filename='profile_pictures/' + rank.foto_perfil) }}" class="img-rank" alt="Avatar">
-                    </a>
 
-                    <a href="{{  url_for('profile', id=rank.id) }}">
-                        <p id="name">{{ rank.username }}</p>
-                    </a>
+    {% if current_user.configNotifications %}
+    {% else %}
+        <div class="notifications">
+            <p id="title-notification">Notificações</p>
 
-                    <p id="followers">{{ rank.followers|length }}</p>
-                </div>
-            {% endfor %}
+            <i class="bi bi-bell"></i>
+
+            <p id="text-notification">Você não tem nenhuma notificação no momento.</p>
         </div>
-    </div>
-
-    <div class="notifications">
-        <p id="title-notification">Notificações</p>
-
-        <i class="bi bi-bell"></i>
-
-        <p id="text-notification">Você não tem nenhuma notificação no momento.</p>
-    </div>
+    {% endif %}
 </div>

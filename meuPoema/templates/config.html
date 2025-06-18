@@ -4,21 +4,25 @@
     <div class="config">
         <div class="config-session-aparencia">
             <h1>Aparência</h1>
-            <div class="remove-rankin input-remove-config">
-                <p>Remover ranking da tela</p>
-                <label class="switch">
-                    <input type="checkbox" id="ranking-toggle">
-                    <span class="slider round"></span>
-                </label>
-            </div>
+            <form action="" method="POST" class="form-config">
+                <div class="remove-rankin input-remove-config">
+                    <p>Remover ranking da tela</p>
+                    <label class="switch">
+                        {{ saveConfig.checkboxRanking }}
+                    </label>
+                </div>
 
-            <div class="remove-notifications input-remove-config">
-                <p>Remover notificações da tela</p>
-                <label class="switch">
-                    <input type="checkbox" id="notification-toggle">
-                    <span class="slider round"></span>
-                </label>
-            </div>
+                <div class="remove-notifications input-remove-config">
+                    <p>Remover notificações da tela</p>
+                    <label class="switch">
+                        {{ saveConfig.checkboxNotifications }}
+                    </label>
+                </div>
+
+                {{ saveConfig.csrf_token }}
+                {{ saveConfig.submit }}
+            </form>
+
         </div>
 
         <hr>

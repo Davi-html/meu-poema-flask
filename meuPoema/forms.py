@@ -33,3 +33,8 @@ class FormEditProfile(flask_wtf.FlaskForm):
 class FollowForm(flask_wtf.FlaskForm):
     follow = SubmitField('Seguir')
     unfollow = SubmitField('Deixar de seguir')
+
+class SaveConfig(flask_wtf.FlaskForm):
+    submit = SubmitField('Salvar')
+    checkboxNotifications = BooleanField('Ativar notificações')
+    checkboxRanking = BooleanField('Ativar ranking')

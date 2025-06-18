@@ -18,6 +18,8 @@ class User(database.Model, UserMixin):
     followers = database.relationship('Follow', foreign_keys='Follow.followed_id', backref='followed', lazy=True)
     bio = database.Column(database.String(), default='Sem biografia')
     notifications = database.relationship('Notification', backref='user', lazy=True)
+    configRanking = database.Column(database.Boolean(), default=False)
+    configNotifications = database.Column(database.Boolean(), default=False)
 
 class Follow(database.Model):
     id = database.Column(database.Integer, primary_key=True)

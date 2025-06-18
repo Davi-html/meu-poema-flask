@@ -499,7 +499,7 @@
     </routine>
     <schema id="191" parent="1" name="main">
       <Current>1</Current>
-      <LastIntrospectionLocalTimestamp>2025-05-31.21:19:48</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2025-06-17.23:41:56</LastIntrospectionLocalTimestamp>
     </schema>
     <argument id="192" parent="16">
       <ArgumentDirection>R</ArgumentDirection>
@@ -1785,16 +1785,24 @@
       <Position>7</Position>
       <StoredType>VARCHAR|0s</StoredType>
     </column>
-    <index id="601" parent="560" name="sqlite_autoindex_user_1">
+    <column id="601" parent="560" name="configRanking">
+      <Position>8</Position>
+      <StoredType>BOOLEAN|0s</StoredType>
+    </column>
+    <column id="602" parent="560" name="configNotifications">
+      <Position>9</Position>
+      <StoredType>BOOLEAN|0s</StoredType>
+    </column>
+    <index id="603" parent="560" name="sqlite_autoindex_user_1">
       <ColNames>email</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <Unique>1</Unique>
     </index>
-    <key id="602" parent="560">
+    <key id="604" parent="560">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="603" parent="560">
+    <key id="605" parent="560">
       <ColNames>email</ColNames>
       <UnderlyingIndexName>sqlite_autoindex_user_1</UnderlyingIndexName>
     </key>

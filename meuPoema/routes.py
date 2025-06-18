@@ -8,7 +8,7 @@ from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, logout_user, current_user, login_required
 
 from meuPoema import app, avatars, database, bcrypt
-from meuPoema.forms import SignupForm, SigninForm, FormEditProfile, FollowForm
+from meuPoema.forms import SignupForm, SigninForm, FormEditProfile, FollowForm, SaveConfig
 from meuPoema.models import User, Post, Follow, Notification, Messages
 
 
@@ -54,11 +54,30 @@ def signin():
     return render_template('signin.html', formsignin=formsignin, rank=rank)
 
 
-@app.route("/config")
+@app.route("/config", methods=['GET', 'POST'])
 @login_required
 def config():
     rank = lista_rank()
-    return render_template('config.html', rank=rank)
+    saveConfig = SaveConfig()
+
+    if saveConfig.validate_on_submit() and "submit" in request.form:
+        current_user.configNotifications = saveConfig.checkboxNotifications.data
+        current_user.configRanking = saveConfig.checkboxRanking.data
+        database.session.commit()
+        flash(f'Configurações salvas com sucesso', 'alert-success')
+        return redirect(url_for('config'))
+
+    if current_user.configNotifications:
+        saveConfig.checkboxNotifications.data = True
+    else:
+        saveConfig.checkboxNotifications.data = False
+
+    if current_user.configRanking:
+        saveConfig.checkboxRanking.data = True
+    else:
+        saveConfig.checkboxRanking.data = False
+
+    return render_template('config.html', rank=rank, saveConfig=saveConfig)
 
 @app.route("/notification")
 @login_required
