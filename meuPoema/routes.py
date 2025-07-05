@@ -103,7 +103,7 @@ def profile(id):
     user = User.query.filter_by(id=id).first()
     followers = Follow.query.filter_by(followed_id=user.id).all()
     following = Follow.query.filter_by(follower_id=user.id).all()
-    post = Post.query.filter_by(user_id=id).first()
+    post = Post.query.filter_by(user_id=id)
     followform = FollowForm()
 
     profile_pictures = url_for('static', filename='profile_pictures/' + user.foto_perfil)
@@ -212,6 +212,16 @@ def edit_profile():
 def postPoem():
     formPost = FormPost()
     rank = lista_rank()
+
+    if formPost.validate_on_submit() and "submit" in request.form:
+        if current_user.is_authenticated:
+            post = Post(title=formPost.title.data, content=formPost.content.data, user_id=current_user.id)
+            database.session.add(post)
+            database.session.commit()
+            flash(f'Poema criado com sucesso', 'alert-success')
+            return redirect(url_for('home'))
+        else:
+            flash('Você precisa estar logado para criar um poema', 'alert-danger')
     return render_template('postPoem.html', current_user=current_user, avatars=avatars, rank=rank, formPost=formPost)
 
 

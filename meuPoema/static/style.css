@@ -397,11 +397,16 @@
 
 .profile, .config, .messagePage, .postPoem {
     width: 689px;
-    height: 940px;
+    height: auto;
     margin: 40px auto;
     background-color: var(--post);
     color: white;
     padding: 30px;
+
+    pre {
+        white-space: pre-line;
+    }
+
 }
 
 .postPoem {

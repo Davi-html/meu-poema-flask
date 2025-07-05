@@ -60,7 +60,12 @@
 
         <div>
             <h2>Sobre mim</h2>
-            <p>{{ post.content }}</p>
+            {% for posts in post %}
+                <pre>
+                    {{ posts.title }}
+                    {{ posts.content }}
+                </pre>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}
