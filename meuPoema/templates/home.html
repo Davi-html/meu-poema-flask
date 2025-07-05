@@ -8,7 +8,10 @@
             {% if current_user.is_authenticated %}
                 <div class="create-poem">
                     <img src="{{ avatars.default(size='s') }}">
-                    <input type="text" placeholder="Escreva algo aqui">
+                    <form action="" method="POST">
+                        {{ formCriarPost.csrf_token }}
+                        {{ formCriarPost.criarPost(class="input-title", placeholder="Título do poema", autocomplete="off") }}
+                    </form>
                 </div>
             {% endif %}
             {% include 'post.html' %}

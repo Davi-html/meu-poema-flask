@@ -68,7 +68,7 @@
       width: 100%;
       height: 100%;
       border: none;
-      background-color: var(--btn-bg);
+      background-color: var(--btn-color);
       color: #fff;
       font-size: 16px;
       font-weight: 400;
@@ -101,14 +101,17 @@
 
   .create-poem {
     width: 90%;
-    height: 69px;
     display: flex;
     gap: 30px;
 
     padding: 1rem;
     border-radius: 10px;
     background-color: var(--post);
-  
+
+    form {
+        width: 100%;
+    }
+
     input {
       width: 100%;
       border: 2px solid var(--nav-bg);
@@ -392,13 +395,37 @@
     margin-bottom: 0;
 }
 
-.profile, .config, .messagePage {
+.profile, .config, .messagePage, .postPoem {
     width: 689px;
     height: 940px;
     margin: 40px auto;
     background-color: var(--post);
     color: white;
     padding: 30px;
+}
+
+.postPoem {
+    form {
+        width: 100%;
+        color: black;
+
+        input, textarea {
+          margin-bottom: 15px;
+          width: 100%;
+          border: 2px solid var(--nav-bg);
+          border-radius: 10px;
+          color: #fff;
+          background-color: transparent;
+          font-size: 16px;
+          text-align: left;
+          padding: 15px;
+        }
+
+        textarea {
+            resize: none;
+            height: 450px;
+        }
+    }
 }
 
 .profile-header, .edit-profile-header {
@@ -647,3 +674,4 @@ ul.flashes {
     cursor: pointer;
     font-weight: bold;
 }
+

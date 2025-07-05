@@ -8,14 +8,23 @@ from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, logout_user, current_user, login_required
 
 from meuPoema import app, avatars, database, bcrypt
-from meuPoema.forms import SignupForm, SigninForm, FormEditProfile, FollowForm, SaveConfig
+from meuPoema.forms import SignupForm, SigninForm, FormEditProfile, FollowForm, SaveConfig, FormPost, FormCriarPost
 from meuPoema.models import User, Post, Follow, Notification, Messages
 
 
-@app.route("/")
+@app.route("/", methods=['GET', 'POST'])
 def home():
     rank = lista_rank()
-    return render_template('home.html', avatars=avatars, rank=rank)
+    formPost = FormPost()
+    formCriarPost = FormCriarPost()
+
+    if formCriarPost.validate_on_submit() and "criarPost" in request.form:
+        if current_user.is_authenticated:
+            return redirect(url_for('postPoem'))
+        else:
+            flash('Você precisa estar logado para criar um poema', 'alert-danger')
+
+    return render_template('home.html', avatars=avatars, rank=rank, formCriarPost=formCriarPost)
 
 
 @app.route("/signup", methods=['GET', 'POST'])
@@ -198,10 +207,12 @@ def edit_profile():
         return redirect(url_for('profile', id=current_user.id))
     return  render_template('edit_profile.html', profile_pictures=profile_pictures, form=form, email=email, username=username, rank=rank)
 
-@app.route("/post/create")
+@app.route("/post/create", methods=['GET', 'POST'])
 @login_required
-def create_post():
-    pass
+def postPoem():
+    formPost = FormPost()
+    rank = lista_rank()
+    return render_template('postPoem.html', current_user=current_user, avatars=avatars, rank=rank, formPost=formPost)
 
 
 def get_user(user_id):

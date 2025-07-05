@@ -1,6 +1,6 @@
 import flask_wtf
 from flask_wtf.file import FileField, FileAllowed
-from wtforms import StringField, SubmitField, PasswordField, EmailField, BooleanField, FileField
+from wtforms import StringField, SubmitField, PasswordField, EmailField, BooleanField, FileField, TextAreaField
 from wtforms.validators import DataRequired, Email, EqualTo, Length, ValidationError
 from meuPoema.models import User
 
@@ -38,3 +38,11 @@ class SaveConfig(flask_wtf.FlaskForm):
     submit = SubmitField('Salvar')
     checkboxNotifications = BooleanField('Ativar notificações')
     checkboxRanking = BooleanField('Ativar ranking')
+
+class FormCriarPost(flask_wtf.FlaskForm):
+    criarPost = SubmitField('Criar Postagem')
+
+class FormPost(flask_wtf.FlaskForm):
+    title = StringField('Digite o titulo do poema aqui', validators=[DataRequired(), Length(min=3, max=100)])
+    content = TextAreaField('Conteúdo', validators=[DataRequired(), Length(min=3, max=5000)])
+    submit = SubmitField('Enviar')

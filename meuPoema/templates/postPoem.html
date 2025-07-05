@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div class="postPoem">
+        <form action="" method="POST">
+            {{ formPost.csrf_token }}
+
+            {{ formPost.title(placeholder="Titulo do poema", autocomplete="off") }}<br>
+            {{ formPost.content(placeholder="Escreva seu poema aqui") }}<br>
+
+            {{ formPost.submit() }}
+        </form>
+    </div>
+{% endblock %}
