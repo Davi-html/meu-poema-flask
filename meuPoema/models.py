@@ -31,6 +31,9 @@ class Post(database.Model):
     title = database.Column(database.String(), nullable=False)
     content = database.Column(database.Text(), nullable=False)
     date_posted = database.Column(database.DateTime(), nullable=False, default=datetime.utcnow)
+    likes = database.Column(database.Integer, default=0)
+    center = database.Column(database.Boolean(), default=False)
+    right = database.Column(database.Boolean(), default=False)
     user_id = database.Column(database.Integer, database.ForeignKey('user.id'), nullable=False)
 
 class Notification(database.Model):

@@ -62,8 +62,27 @@
             <h2>Sobre mim</h2>
             {% for posts in post %}
                 <pre>
-                    {{ posts.title }}
-                    {{ posts.content }}
+                    <div class="poemPost-header">
+                        <img src="{{ profile_pictures }}" alt="Avatar" class="avatar-poemPost">
+
+                        <div class="poemPost-info">
+                            <p class="poemPost-name">{{ user.username }}
+                            <p class="poemPost-time">{{ posts.date_posted.strftime('%d %B %Y, %H:%M') }}</p>
+                        </div>
+
+                        <nav>
+                          <img class="bookmark" src="{{ url_for('static', filename='bookmark.svg')}}" alt="bookmark">
+
+                          <div class="div-settings">
+                            <p class="settings">...</p>
+                          </div>
+                        </nav>
+                    </div>
+                    <p class="poemPost-title">{{ posts.title }}</p>
+                    <div class="poemPost-content">
+                        {{ posts.content }}
+                    </div>
+
                 </pre>
             {% endfor %}
         </div>
