@@ -15,7 +15,6 @@ from meuPoema.models import User, Post, Follow, Notification, Messages
 @app.route("/", methods=['GET', 'POST'])
 def home():
     rank = lista_rank()
-    formPost = FormPost()
     formCriarPost = FormCriarPost()
 
     if formCriarPost.validate_on_submit() and "criarPost" in request.form:
@@ -103,7 +102,7 @@ def profile(id):
     user = User.query.filter_by(id=id).first()
     followers = Follow.query.filter_by(followed_id=user.id).all()
     following = Follow.query.filter_by(follower_id=user.id).all()
-    post = Post.query.filter_by(user_id=id)
+    post = Post.query.filter_by(user_id=id).order_by(Post.date_posted.desc()).all()
     followform = FollowForm()
 
     profile_pictures = url_for('static', filename='profile_pictures/' + user.foto_perfil)

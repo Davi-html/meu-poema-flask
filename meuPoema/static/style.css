@@ -426,7 +426,6 @@
           color: #fff;
           background-color: transparent;
           font-size: 16px;
-          text-align: left;
           padding: 15px;
         }
 
@@ -728,4 +727,20 @@ ul.flashes {
 
 .poemPost-content {
     height: auto;
+}
+
+.poemPost-text-align {
+    font-size: 46px;
+    display: flex;
+    justify-content: center;
+    gap: 35px;
+    color: #fff;
+
+    button {
+        background-color: transparent;
+        border: none;
+        color: #fff;
+        font-size: 46px;
+        cursor: pointer;
+    }
 }
