@@ -165,7 +165,7 @@
   }
 }
 
-.post nav, .poemPost-header nav {
+.post nav, .home-post nav, .home-post-header nav, .poemPost-header nav {
   display: flex;
   gap: 10px;
   margin-left: auto;

@@ -25,6 +25,14 @@
                                 <p class="home-post-username">{{ user.username }}</p>
                                 <p class="poemPost-time">{{ post.date_posted.strftime('%d %B %Y, %H:%M') }}</p>
                             </div>
+
+                            <nav>
+                              <img class="bookmark" src="{{ url_for('static', filename='bookmark.svg')}}" alt="bookmark">
+
+                              <div class="div-settings">
+                                <p class="settings">...</p>
+                              </div>
+                            </nav>
                         </div>
 
                         <pre class="home-post-content">
