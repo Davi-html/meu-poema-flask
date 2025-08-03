@@ -14,7 +14,26 @@
                     </form>
                 </div>
             {% endif %}
-            {% include 'post.html' %}
+
+            <div class="home-posts">
+                {% for post in posts %}
+                    <div class="home-post">
+                        <div class="home-post-header">
+                            {% set user = get_user(post.user_id) %}
+                            <img src="{{ profile_pictures }}{{user.foto_perfil }}" alt="Avatar" class="avatar-post">
+                            <div class="home-post-info">
+                                <p class="home-post-username">{{ user.username }}</p>
+                                <p class="poemPost-time">{{ post.date_posted.strftime('%d %B %Y, %H:%M') }}</p>
+                            </div>
+                        </div>
+
+                        <pre class="home-post-content">
+                            <h2 class="home-post-title">{{ post.title }}</h2>
+                            {{ post.content }}
+                        </pre>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 {% endblock %}

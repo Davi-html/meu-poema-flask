@@ -17,13 +17,16 @@ def home():
     rank = lista_rank()
     formCriarPost = FormCriarPost()
 
+    posts = Post.query.order_by(Post.date_posted.desc()).all()
+    profile_pictures = url_for('static', filename='profile_pictures/')
+
     if formCriarPost.validate_on_submit() and "criarPost" in request.form:
         if current_user.is_authenticated:
             return redirect(url_for('postPoem'))
         else:
             flash('Você precisa estar logado para criar um poema', 'alert-danger')
 
-    return render_template('home.html', avatars=avatars, rank=rank, formCriarPost=formCriarPost)
+    return render_template('home.html', avatars=avatars, rank=rank, formCriarPost=formCriarPost, posts=posts, current_user=current_user, profile_pictures=profile_pictures, get_user=get_user)
 
 
 @app.route("/signup", methods=['GET', 'POST'])

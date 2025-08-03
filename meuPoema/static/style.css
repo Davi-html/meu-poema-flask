@@ -403,14 +403,14 @@
     color: white;
     padding: 30px;
 
-    pre {
-        white-space: pre-line;
-        border-radius: 10px;
-        background: #262626;
-        color: white;
-        border: none;
-    }
+}
 
+pre {
+    white-space: pre-line;
+    border-radius: 10px;
+    background: #262626;
+    color: white;
+    border: none;
 }
 
 .postPoem {
@@ -726,7 +726,7 @@ ul.flashes {
 }
 
 .poemPost-content {
-    height: auto;
+    max-height: 500px;
 }
 
 .poemPost-text-align {
@@ -743,4 +743,44 @@ ul.flashes {
         font-size: 46px;
         cursor: pointer;
     }
+}
+
+.home-posts {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin-top: 20px;
+    width: 100%;
+
+    color: white;
+}
+
+.home-post-header {
+    display: flex;
+    gap: 20px;
+
+    img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+    }
+}
+
+.home-post-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+
+}
+
+.home-post {
+    width: 90%;
+    margin-top: 20px;
+    border-radius: 20px;
+    padding: 20px;
+
+    background-color: var(--post);
 }
