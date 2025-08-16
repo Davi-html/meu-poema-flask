@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 import os
-
+import sqlalchemy
 app = Flask(__name__)
 avatars = Avatars(app)
 
@@ -21,4 +21,14 @@ login_manager = LoginManager(app)
 login_manager.login_view = 'signin'
 login_manager.login_message_category = 'alert-info'
 
+from meuPoema import models
+engine = sqlalchemy.create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
+inspect = sqlalchemy.inspect(engine)
+if not inspect.has_table('user'):
+    with app.app_context():
+        database.drop_all()
+        database.create_all()
+        print("Banco de dados criado com sucesso!")
+else:
+    print("Banco de dados já existe, não foi necessário criar novamente.")
 from meuPoema import routes
