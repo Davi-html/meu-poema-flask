@@ -34,7 +34,7 @@ def signup():
     formsignup = SignupForm()
     rank = lista_rank()
     if formsignup.validate_on_submit():
-        crypt_password = bcrypt.generate_password_hash(formsignup.password.data)
+        crypt_password = bcrypt.generate_password_hash(formsignup.password.data).decode("utf-8")
         user = User(username=formsignup.name.data, email=formsignup.email.data, password=crypt_password)
         database.session.add(user)
         database.session.commit()
