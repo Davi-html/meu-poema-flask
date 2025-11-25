@@ -14,6 +14,10 @@ def message(sender, recever):
     recever_user = User.query.get(recever)
 
     # Validações
+    if not sender_user or not recever_user:
+        flash('Usuário não encontrado', 'alert-danger')
+        return redirect(url_for('home'))
+
     if sender_user.id == recever_user.id:
         flash('Você não pode enviar mensagens para si mesmo', 'alert-danger')
         return redirect(url_for('home'))
@@ -22,18 +26,13 @@ def message(sender, recever):
         flash('Ação não autorizada', 'alert-danger')
         return redirect(url_for('home'))
 
-    if not sender_user or not recever_user:
-        flash('Usuário não encontrado', 'alert-danger')
-        return redirect(url_for('home'))
-
     if request.method == 'POST':
         message_content = request.form.get('message')
         if message_content:
-            new_message = Messages(
-                sender_id=sender,
-                recever_id=recever,
-                message=message_content
-            )
+            new_message = Messages()
+            new_message.sender_id = sender
+            new_message.recever_id = recever
+            new_message.message = message_content
             db.session.add(new_message)
             db.session.commit()
 
@@ -45,7 +44,7 @@ def message(sender, recever):
                 'message': message_content,
                 'date_created': datetime.utcnow().strftime('%H:%M'),
                 'sender_username': sender_user.username
-            }, room=room)
+            }, to=room)
 
             return '', 204  # Resposta vazia para requisições AJAX
 
@@ -65,7 +64,7 @@ def handle_join_chat(data):
     user_id = data['user_id']
     room = data['room']
     join_room(room)
-    emit('user_connected', {'user_id': user_id}, room=room)
+    emit('user_connected', {'user_id': user_id}, to=room)
 
 
 if __name__ == "__main__":

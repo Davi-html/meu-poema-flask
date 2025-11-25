@@ -35,7 +35,10 @@ def signup():
     rank = lista_rank()
     if formsignup.validate_on_submit():
         crypt_password = bcrypt.generate_password_hash(formsignup.password.data).decode("utf-8")
-        user = User(username=formsignup.name.data, email=formsignup.email.data, password=crypt_password)
+        user = User()
+        user.username = formsignup.name.data
+        user.email = formsignup.email.data
+        user.password = crypt_password
         database.session.add(user)
         database.session.commit()
         flash(f'Conta criada para o e-mail {formsignup.email.data}', 'alert-success')
@@ -54,13 +57,13 @@ def signin():
             login_user(user, remember=formsignin.rememberPassword.data)
             flash(f'Login feito com sucesso no e-mail {formsignin.email.data}', 'alert-success')
 
-            param_next = request.args.get('next')
-            if param_next:
-                return redirect(param_next)
-            else:
-                return redirect(url_for('home'))
+        param_next = request.args.get('next')
+        if param_next:
+            return redirect(param_next)
         else:
-            flash('Login sem sucesso. Verifique seus dados de acesso', 'alert-danger')
+            return redirect(url_for('home'))
+    else:
+        flash('Login sem sucesso. Verifique seus dados de acesso', 'alert-danger')
 
     return render_template('signin.html', formsignin=formsignin, rank=rank)
 
@@ -93,7 +96,7 @@ def config():
 @app.route("/notification")
 @login_required
 def notification():
-    notification = Notification.query.filter_by(recever_id=current_user.id).order_by(Notification.date_created.desc()).all()
+    notification = Notification.query.filter_by(receiver=current_user).order_by(Notification.date_created.desc()).all()
     rank = lista_rank()
     return render_template('notification.html', notification=notification, current_user=current_user, rank=rank)
 
@@ -103,6 +106,9 @@ def profile(id):
     id = id
     rank = lista_rank()
     user = User.query.filter_by(id=id).first()
+    if user is None:
+        flash('Usuário não encontrado', 'alert-danger')
+        return redirect(url_for('home'))
     followers = Follow.query.filter_by(followed_id=user.id).all()
     following = Follow.query.filter_by(follower_id=user.id).all()
     post = Post.query.filter_by(user_id=id).order_by(Post.date_posted.desc()).all()
@@ -124,15 +130,22 @@ def profile(id):
                     flash(f'Você já segue {user.username}', 'alert-danger')
                     return redirect(url_for('profile', id=user.id))
 
-            follow = Follow(follower_id=current_user.id, followed_id=user.id)
+            follow = Follow()
+            follow.follower_id = current_user.id
+            follow.followed_id = user.id
             database.session.add(follow)
             database.session.commit()
 
-            notification = Notification(recever_id=user.id, sender_id=current_user.id, message=f'comecou a seguir voce', is_read=False)
+            notification = Notification()
+            # Use foreign key id fields for receiver and sender se os relacionamentos não existirem
+            notification.recever_id = user.id
+            notification.sender_id = current_user.id
+            notification.message = 'comecou a seguir voce'
+            notification.is_read = False
 
-            # Verifica se a notificação já existe
+            # Verifica se a notificação já existe (filtra pelos ids)
             existing_notification = Notification.query.filter_by(
-                recever_id=user.id,
+                receiver_id=user.id,
                 sender_id=current_user.id
             ).first()
 
@@ -162,9 +175,9 @@ def profile(id):
 
 def lista_rank():
     rank = (database.session.query(User)
-            .outerjoin(User.followers)
+            .outerjoin(Follow, User.id == Follow.followed_id)
             .group_by(User.id)
-            .order_by(func.count(User.followers).desc())
+            .order_by(func.count(Follow.id).desc())
             .limit(5)
             .all())
     return rank
@@ -217,7 +230,10 @@ def postPoem():
 
     if formPost.validate_on_submit() and "submit" in request.form:
         if current_user.is_authenticated:
-            post = Post(title=formPost.title.data, content=formPost.content.data, user_id=current_user.id)
+            post = Post()
+            post.title = formPost.title.data
+            post.content = formPost.content.data
+            post.user_id = current_user.id
             database.session.add(post)
             database.session.commit()
             flash(f'Poema criado com sucesso', 'alert-success')
@@ -235,14 +251,21 @@ def get_user(user_id):
 @login_required
 def followers(id):
     user = User.query.filter_by(id=id).first()
+    if user is None:
+        flash('Usuário não encontrado', 'alert-danger')
+        return redirect(url_for('home'))
     user_followers = Follow.query.filter_by(followed_id=user.id).all()
-
     return render_template('followers.html', user=user, user_followers=user_followers, get_user=get_user)
-
 @app.route("/profile/<int:id>/following")
 @login_required
 def following(id):
     user = User.query.filter_by(id=id).first()
+    if user is None:
+        flash('Usuário não encontrado', 'alert-danger')
+        return redirect(url_for('home'))
+    user_following = Follow.query.filter_by(follower_id=user.id).all()
+
+    return render_template('following.html', user=user, user_following=user_following, get_user=get_user)
     user_following = Follow.query.filter_by(follower_id=user.id).all()
 
     return render_template('following.html', user=user, user_following=user_following, get_user=get_user)
